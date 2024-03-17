@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "C:\\Users\\jedco\\OneDrive\\Desktop\\Capstonee\\backend\\WebAPI\\WebAPI",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
