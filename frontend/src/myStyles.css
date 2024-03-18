@@ -76,23 +76,3 @@
     max-height: 100vh; /* Image fits vertically within its container */
     max-width: 100%;  /* Preserves aspect ratio */
   }
-
-  /*Home CSS*/
-
-  /* Basic styling for clarity */
-.recordsTable {
-  border-collapse: collapse; /* Make table cells collapse into a single border */
-  width: 100%;               /* Use the full available width */
-  margin-bottom: 20px;       /* Add some space below the table */
-}
-
-.recordsTable th,
-.recordsTable td {
-  border: 1px solid #ddd;   /* Add a subtle border to cells */
-  padding: 8px;             /* Add cell padding for visual spacing  */
-  text-align: left;         /* Align text to the left by default */
-}
-
-.recordsTable th { 
-  background-color: #f0f0f0; /* Light gray background for headers */
-}

@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #D7F3D5;
+    padding: 20px;
+}
+
+.dashboard{
+    display: flex;
+    gap: 20px;
+}
+
+.dashboard--content {
+    background: #fff;
+    flex: 1;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+
+}
+
+/* Basic styling for clarity */
+.recordsTable {
+border-collapse: collapse; /* Make table cells collapse into a single border */
+width: 100%;               /* Use the full available width */
+margin-bottom: 20px;       /* Add some space below the table */
+}
+
+.recordsTable th,
+.recordsTable td {
+border: 1px solid #ddd;   /* Add a subtle border to cells */
+padding: 8px;             /* Add cell padding for visual spacing  */
+text-align: left;         /* Align text to the left by default */
+}
+
+.recordsTable th { 
+background-color: #f0f0f0; /* Light gray background for headers */
+}
