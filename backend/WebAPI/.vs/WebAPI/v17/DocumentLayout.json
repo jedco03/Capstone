@@ -86,8 +86,7 @@
               "RelativeToolTip": "WebAPI\\Controllers\\AuthController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T14:23:40.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T14:23:40.967Z"
             },
             {
               "$type": "Document",
@@ -99,8 +98,7 @@
               "RelativeToolTip": "WebAPI\\Models\\Users.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T14:09:14.313Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T14:09:14.313Z"
             },
             {
               "$type": "Document",
@@ -112,8 +110,7 @@
               "RelativeToolTip": "WebAPI\\Program.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAAAA0AAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T11:07:16.584Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T11:07:16.584Z"
             },
             {
               "$type": "Document",
@@ -125,8 +122,7 @@
               "RelativeToolTip": "WebAPI\\Services\\StudentServices.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAAgwAwAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T11:06:44.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T11:06:44.314Z"
             },
             {
               "$type": "Document",
@@ -150,8 +146,7 @@
               "RelativeToolTip": "WebAPI\\Data\\DatabaseSettings.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T11:05:07.337Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T11:05:07.337Z"
             },
             {
               "$type": "Document",
@@ -161,7 +156,7 @@
               "RelativeDocumentMoniker": "WebAPI\\Controllers\\RecordsController.cs",
               "ToolTip": "C:\\Users\\My Pc\\Desktop\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\RecordsController.cs",
               "RelativeToolTip": "WebAPI\\Controllers\\RecordsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAAMAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAIwCIAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T11:00:15.134Z",
               "EditorCaption": ""

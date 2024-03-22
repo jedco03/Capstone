@@ -1,5 +1,4 @@
 import React from 'react';
-import { BiSearch, BiNotification } from 'react-icons/bi';
 
 const ContentHeader = ({ searchTerm, onSearchChange }) => {
     return <div className='content--header'>
