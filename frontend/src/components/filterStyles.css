@@ -1,0 +1,14 @@
+.custom-dropdown {
+    position: absolute; /* Ensure absolute positioning for control */
+    top: calc(100% + 5px); /* Position below the dropdown, adjust the offset */
+    left: 0; /* Align with the left side */
+    width: auto;  /* Allow the width to adjust to content */
+}
+
+.custom-dropdown .select__menu { 
+    padding-top: 0; /* Reset top padding */
+}
+
+.custom-dropdown .select__option {
+    margin-top: 0; /* Reset top margin of options */
+}

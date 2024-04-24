@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios'; 
 import '../styles/dashStyles.css';
 import '../styles/content.css';
@@ -6,7 +7,7 @@ import Filters from './Filters';
 import { BiSearch, BiNotification } from 'react-icons/bi';
 
 
-function FetchRecords({ apiEndpoint }) {
+function FetchRecords({ apiEndpoint, onExpand }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,6 +20,7 @@ function FetchRecords({ apiEndpoint }) {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setData([]);
       try {
         const result = await axios.get(apiEndpoint);
         setData(result.data);
@@ -54,25 +56,15 @@ function FetchRecords({ apiEndpoint }) {
 }, [data, searchTerm, checkedColleges]);
 
   //Handle Chekcing and Unchecking
-  const handleCollegeChange = (e) => {
-    const college = e.target.value;
-    console.log('Selected college:', college);
-    console.log('Number of colleges: ', college.length)
-    setCheckedColleges(prevCheckedColleges => {
-      const updatedCheckedColleges = {...prevCheckedColleges};    
-      updatedCheckedColleges[college] = !prevCheckedColleges[college];
-
-      // Delete if the updated value is false:  
-      if (!updatedCheckedColleges[college]) {
-          delete updatedCheckedColleges[college];
-      }
-
-      return updatedCheckedColleges;  
-  });
+  const handleCollegeChange = (updatedCheckedColleges) => {
+    setCheckedColleges(updatedCheckedColleges);
 };
 
+
+
 return (
-    <div>
+  
+      <div> 
       <div className='search-box'>
       <input 
         type="text" 
@@ -88,7 +80,6 @@ return (
 
       {!isLoading && !error && tableData && (
         <>
-          <h1>Student Records</h1> 
           <div className='content-wrapper'>
             <div className='table-section'>
             <table className='recordsTable'>
@@ -101,50 +92,48 @@ return (
                   <th>Gender</th>
                   <th>Phone No.</th>
                   <th>Guardian</th>
-                  <th>Violation</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Remarks</th>
+                  <th>Count</th>
+                  <th>Expand</th>
                 </tr>
               </thead>
               <tbody>
               {tableData !== null ? ( // Check if tableData is not null
                   tableData.length > 0 ? (
                     tableData.map((student) => ( 
-                      <tr key={student._id}> 
-                      <td>{student.studentNumber}</td>
-                      <td>{student.firstName} {student.middleName} {student.lastName}</td>
+                      <tr key={student.id}> 
+                      <td>{student.studentNumber}</td> 
+                      <td>{student.firstName} {student.middleName} {student.lastName}</td> 
                       <td>{student.college}</td>
                       <td>{student.year}</td>
                       <td>{student.gender}</td>
                       <td>{student.phoneNumber}</td>
                       <td>{student.guardian}</td>
-                      <td>{student.violation}</td>
-                      <td>{student.type}</td>
-                      <td>{student.status}</td>
-                      <td>{student.remarks}</td>
+                      <td>{student.numberOfViolations}</td> 
+                      <td><Link to={`/home/expanded-record/${student.studentNumber}`}>
+                        Expand
+                    </Link></td>
                     </tr>
                   ))
                   ) : (
-                    <tr><td colSpan="11">No matching records found</td></tr> 
+                    <tr><td colSpan="12">No matching records found</td></tr> 
                   )
                 ) : ( 
-                  <tr><td colSpan="11">Loading...</td></tr>  // Loading placeholder
+                  <tr><td colSpan="12">Loading...</td></tr>  // Loading placeholder
                 )} 
               </tbody>
             </table>
           </div>
+          </div>
+        </>
+      )}
 
-            <div class="filters-section">
+<div class="filters-section">
               <Filters 
                 colleges={colleges} 
                 checkedColleges={checkedColleges}
                 onCollegeChange={handleCollegeChange} 
               />
             </div>
-          </div>
-        </>
-      )}
     </div>
   );
 }

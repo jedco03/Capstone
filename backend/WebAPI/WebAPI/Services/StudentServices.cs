@@ -36,7 +36,6 @@ namespace WebAPI.Services
         public async Task UpdateAsync(string id, Student updateStudent)
         {
             var objectId = new ObjectId(id);
-
             await _studentCollection.ReplaceOneAsync(x => x.Id == id, updateStudent);
         }
     }

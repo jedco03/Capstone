@@ -41,6 +41,8 @@ border: 1px solid #ddd;   /* Add a subtle border to cells */
     display: flex;
     align-items: center;
     width: 200px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 .search-box input {
     border: none;

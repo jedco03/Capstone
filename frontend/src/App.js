@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route , Navigate } from 'react-router-dom'; 
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/Home';
+import ExpandedRecord from './components/ExpandedRecord';
 import './myStyles.css';
 
 function App() {
@@ -12,7 +13,10 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={ <LoginPage setIsAuthenticated={setIsAuthenticated}  /> } /> 
-          <Route path="/home" element={ isAuthenticated ? <HomePage /> : <Navigate replace to="/" /> } />
+          <Route path="/home" element={<HomePage />} /> 
+          <Route path="/home/expanded-record/:studentId" element={<ExpandedRecord />} />
+          {/*<Route path="/reports-summary" element={<ReportsSummaryPage />} /> 
+          {/* ... routes for other pages */}
         </Routes>
       </div>
     </BrowserRouter>

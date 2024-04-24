@@ -14,7 +14,17 @@
     color: #fff;
     align-items: center;
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+}
+
+.logo h2 {
+    font-size: 32px;
 }
 
 .logo-icon{

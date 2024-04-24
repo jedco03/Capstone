@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         }
         private bool VerifyPasswordHash(string providedPassword, string storedPasswordHash)
         {
-            // Extract salt with version and work factor (adjust regex if needed)
+            // Extract salt with version and work factor
             string salt = storedPasswordHash.Substring(0, 29);
 
             // Reconstruct hash using the extracted salt

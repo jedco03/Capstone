@@ -14,7 +14,7 @@ namespace WebAPI.Services
         {
             var mongoClient = new MongoClient(settings.Value.Connection);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
-            _usersCollection = mongoDb.GetCollection<User>("users"); // Assuming "users" collection for authentication
+            _usersCollection = mongoDb.GetCollection<User>("users"); 
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)

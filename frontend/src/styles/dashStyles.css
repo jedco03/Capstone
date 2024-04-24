@@ -21,5 +21,10 @@ body {
     display: flex;
     gap: 1.5rem;
     justify-content: space-between;
+    width: 100%;
 
+}
+.scrollable-table-container {
+    max-height: 200px;  /* Set the desired max height of the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
 }

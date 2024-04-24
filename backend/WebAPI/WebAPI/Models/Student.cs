@@ -10,16 +10,16 @@ namespace WebAPI.Models {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = string.Empty;
 
-        [BsonElement("studno")]
+        [BsonElement("studentNumber")]
         public string StudentNumber { get; set; } = "Student Number";
 
-        [BsonElement("fname")]
+        [BsonElement("firstName")]
         public string FirstName { get; set; } = "Student First Name";
 
-        [BsonElement("lname")]
+        [BsonElement("lastName")]
         public string LastName { get; set; } = "Student Last Name";
 
-        [BsonElement("mname")]
+        [BsonElement("middleName")]
         public string MiddleName { get; set; } = "Student Middle Name";
 
         [BsonElement("year")]
@@ -37,21 +37,18 @@ namespace WebAPI.Models {
         [BsonElement("guardian")]
         public string Guardian { get; set; } = "Guardian Name";
 
-        [BsonElement("violation")]
-        public string Violation { get; set; } = "Violation";
+        public int NumberOfViolations { get; set; } = 0;
 
-        [BsonElement("type")]
-        public string Type { get; set; } = "Type of Violation";
+        [BsonElement("violations")]
+        public List<Violation> Violations { get; set; } = new List<Violation>();
 
-        [BsonElement("status")]
-        public string Status { get; set; } = "Status";
+    }
 
-        /*[BsonElement("date")]
-        public string Date { get; set; } */
-
-
-        [BsonElement("remarks")]
-        public string Remarks { get; set; } = "Remarks";
-
+    public class Violation
+    {
+        public string violation { get; set; }
+        public string type { get; set; }
+        public string status { get; set; }
+        public string remarks { get; set; }
     }
 }

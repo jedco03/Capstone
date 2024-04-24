@@ -40,18 +40,18 @@ namespace WebAPI.Controllers
             }
 
             // PUT api/records/5
-            [HttpPut("{id}")]
-            public async Task<ActionResult> Put(string id, Student updateStudent)
+            [HttpPut("{studno}")]
+            public async Task<ActionResult> Put(string studno, Student updateStudent)
             {
-                Student student = await _studentServices.GetAsync(id);
-                if (student == null)
+                Student student = await _studentServices.GetAsync(studno);
+            if (student == null)
                 {
-                    return NotFound("There is no Record with this id: " + id);
+                    return NotFound("There is no Record with this id: " + studno);
                 }
 
                 updateStudent.Id = student.Id;
 
-                await _studentServices.UpdateAsync(id, updateStudent);
+                await _studentServices.UpdateAsync(studno, updateStudent);
 
                 return Ok("Updated Successfuly");
             }
