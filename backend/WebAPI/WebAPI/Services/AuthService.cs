@@ -21,5 +21,13 @@ namespace WebAPI.Services
         {
             return await _usersCollection.Find(Builders<User>.Filter.Regex("username", new BsonRegularExpression(username, "i"))).FirstOrDefaultAsync();
         }
+
+        public string HashPassword(string plainTextPassword)
+        {
+            string salt = BCrypt.Net.BCrypt.GenerateSalt();
+            return BCrypt.Net.BCrypt.HashPassword(plainTextPassword, salt);
+        }
+
+
     }
 }

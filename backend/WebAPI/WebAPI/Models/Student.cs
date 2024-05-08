@@ -37,6 +37,7 @@ namespace WebAPI.Models {
         [BsonElement("guardian")]
         public string Guardian { get; set; } = "Guardian Name";
 
+        [BsonElement("numberOfViolations")]
         public int NumberOfViolations { get; set; } = 0;
 
         [BsonElement("violations")]

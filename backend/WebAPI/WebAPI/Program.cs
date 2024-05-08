@@ -1,5 +1,6 @@
 using WebAPI.Data;
 using WebAPI.Services;
+using WebAPI.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +16,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("http://localhost:3000") 
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        builder.WithOrigins("http://localhost:3000")
+        .AllowAnyMethod()
+        .AllowAnyHeader();
     });
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("DeanAccess", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireRole("dean")
+              .AddRequirements(new DeanAccessRequirement())); // Your custom requirement
 });
 
 var app = builder.Build();

@@ -2,18 +2,30 @@
 
 /*Login Form CSS*/
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body { /* Or a more specific wrapper element if you prefer */
+  overflow: hidden;  /* Hide any overflow content */
+  height: 100vh;     /* Force the body to fill the viewport */
+}
+
 .LoginPage {
     background-color: #D7F3D5;
-    display: flex; /* Use flexbox for layout */
     min-height: 100vh; /* Ensure full viewport height */
 }
 
-
 .loginFormContainer {
-    position: relative; /* Needed for absolute positioning of form */
-    width: 40%;  /* Form takes up half the screen horizontally */
-    padding: 30px;
-    margin-right: 2rem;
+  position: absolute; /* Allow for precise positioning */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+  width: 40%;
+  padding: 30px;
+  margin-right: 2rem; /* Adjust margin if needed */
 }
 
 .loginPage {
@@ -24,22 +36,52 @@
   }
   
   .loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 30px;
     padding: 30px;
-    display: flex; /* Allow for easy alignment*/
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;  
-    font-size: 16px;
   }
 
-  .loginForm input {
-    padding: 15px; 
-    width: 400px;
-    margin-bottom: 10px; 
-    border: 0px;
-    border-radius: 20px; 
-    margin-left: 10px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px; 
+  .inputBox {
+    position: relative;
+    width: 250px;
+  }
+
+  .inputBox input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: #d7f3d5;
+    outline: none;
+    color: black;
+    font-size: 18px;
+  }
+
+  .inputBox span {
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 18px;
+    color: black;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+
+  
+  .inputBox input:valid ~ span,
+  .inputBox input:focus ~ span {
+    color: #55BA5F;
+    transform: translateX(10px) translateY(-7px);
+    font-size: 11px;
+    padding: 0 10px;
+    background-color: #d7f3d5;
+    border-left: 1px solid #55BA5F;
+    border-right: 1px solid #55BA5F;
   }
 
   .loginForm button {
@@ -65,14 +107,7 @@
     height: auto;
     margin-bottom: 5px; /* Space below the logo */
   }
-
-  .loginDesign {
-    display: flex; 
-    justify-content: left; 
-    align-items: left; 
-  }
-
-  .loginDesign img {
-    max-height: 100vh; /* Image fits vertically within its container */
-    max-width: 100%;  /* Preserves aspect ratio */
+  .SACLOGO { 
+    margin-bottom: 20px;
+    text-align: center; 
   }

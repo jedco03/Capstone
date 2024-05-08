@@ -27,13 +27,21 @@ const Sidebar = () => {
                 <BiHelpCircle className='icon'/>
                 Help
             </a>
-            <a href='#' className='item'>
+            <a href='/addrecord' className='item'>
                 <BiListPlus className='icon'/>
                 Add Record
             </a>
             <a href='#' className='item'>
                 <BiExit className='icon'/>
                 Logout
+            </a>
+            <a href='#' className='item'>
+                <BiExit className='icon'/>
+                Audit  Trail
+            </a>
+            <a href='#' className='item'>
+                <BiExit className='icon'/>
+                File Management
             </a>
         </div>
     </div>

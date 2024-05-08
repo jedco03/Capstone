@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs'; 
+import { useRole } from './useRole'
 import { useNavigate } from 'react-router-dom';
 import '../myStyles.css';
 
@@ -12,6 +12,9 @@ function LoginForm({ isAuthenticated, setIsAuthenticated }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const selectedRole = document.getElementById('roleSelect').value;
+    localStorage.setItem('userRole', selectedRole);
 
     console.log("Username:", username);
     console.log("Password:", password);
@@ -34,27 +37,38 @@ function LoginForm({ isAuthenticated, setIsAuthenticated }) {
 
 
   return (
-    <div onSubmit={handleSubmit} className='loginForm'>
-      <div>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username" 
-        />
+    <div>
+      <div onSubmit={handleSubmit} className='loginForm'>
+      <img src="/SACLOGO.png" alt="Login Logo"/>
+        <div className='inputBox'>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)} 
+            required="required" 
+          />
+          <span>Username</span>
+        </div>
+        <div>
+          <div className='inputBox'>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required="required" 
+            />
+            <span>Password</span>
+          </div>
+        </div>
+        <button type="button" onClick={handleSubmit}>Login</button> 
+        {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+        <select id="roleSelect">
+          <option value="Dean">Dean</option>
+          <option value="SAC">SAC</option>
+        </select>
       </div>
-      <div>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password" 
-        />
-      </div>
-      <button type="button" onClick={handleSubmit}>Login</button> 
-      {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
     </div>
   );
 }

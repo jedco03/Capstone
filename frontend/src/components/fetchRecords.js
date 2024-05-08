@@ -64,14 +64,14 @@ function FetchRecords({ apiEndpoint, onExpand }) {
 
 return (
   
-      <div> 
+    <div> 
       <div className='search-box'>
-      <input 
-        type="text" 
-        placeholder="Search Student Number" 
-        value={searchTerm} 
-        onChange={e => setSearchTerm(e.target.value)}></input>
-        <BiSearch className='icon' />
+        <input 
+          type="text" 
+          placeholder="Search Student Number" 
+          value={searchTerm} 
+          onChange={e => setSearchTerm(e.target.value)}></input>
+          <BiSearch className='icon' />
       </div>
       
       
@@ -123,17 +123,19 @@ return (
               </tbody>
             </table>
           </div>
+          
+          <div class="filter-section">
+            <Filters 
+              colleges={colleges} 
+              checkedColleges={checkedColleges}
+              onCollegeChange={handleCollegeChange} 
+            />
           </div>
+
+        </div>
         </>
       )}
 
-<div class="filters-section">
-              <Filters 
-                colleges={colleges} 
-                checkedColleges={checkedColleges}
-                onCollegeChange={handleCollegeChange} 
-              />
-            </div>
     </div>
   );
 }

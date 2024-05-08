@@ -3,7 +3,7 @@
 "ServerUrl": "",
 "RedirectUrl": "",
 "LaunchCommand": "",
-"WorkingDirectory": "C:\\Users\\My Pc\\Desktop\\Capstone\\backend\\WebAPI\\WebAPI",
+"WorkingDirectory": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

@@ -6,7 +6,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/auth")] // Route prefix 
+    [Route("api/auth")] // Route prefix 
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         {
             var user = await _authService.GetUserByUsernameAsync(credentials.Username);
 
-            
+
             if (user == null)
             {
 
@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
             }
 
             // Generate JWT upon successful authentication
-            return Ok(new { message = "Authentication Successful" });
+            return Ok(new { message = "Authentication Successful", role = user.role });
         }
         private bool VerifyPasswordHash(string providedPassword, string storedPasswordHash)
         {
@@ -44,8 +44,10 @@ namespace WebAPI.Controllers
             // Reconstruct hash using the extracted salt
             string newHash = BCrypt.Net.BCrypt.HashPassword(providedPassword, salt);
 
+
             // Compare the newly generated hash with the stored one
             return newHash == storedPasswordHash;
         }
     }
+
 }

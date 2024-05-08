@@ -10,5 +10,14 @@ namespace WebAPI.Models
         public string username { get; set; }
         [BsonElement("password")]
         public string PasswordHash { get; set; }
+        [BsonElement("role")]
+        public string role { get; set; }
+        [BsonElement("name")]
+        public string Name { get; set; }
+        [BsonElement("email")]
+        public string Email { get; set; }
+        [BsonElement("college")]
+        public string college { get; set; }
+
     }
 }

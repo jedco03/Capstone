@@ -25,8 +25,8 @@
 
 .recordsTable th,
 .recordsTable td {
-border: 1px solid #ddd;   /* Add a subtle border to cells */
-        padding: 8px;             /* Add cell padding for visual spacing  */
+    border: 1px solid #ddd;   /* Add a subtle border to cells */
+    padding: 8px;             /* Add cell padding for visual spacing  */
     text-align: left;         /* Align text to the left by default */
 }
 
@@ -59,18 +59,20 @@ border: 1px solid #ddd;   /* Add a subtle border to cells */
     transition: 0.5s ease-in-out;
 }
 
-/* General Styles */
 .content-wrapper {
-    display: flex; /* Enable flexbox layout */
-    gap: 50px;
+    width: 100%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+  }
+  
+div.table-section { 
+  flex: 3; 
+  margin-right: 20px; 
 }
   
-.table-section {
-    width: 100%; /* Adjust as needed for table width */}
-  
-.filters-section {
-    width: 50%;
-    column-count: 2; /* Divide the content into two columns */
-    column-gap: 20px; /* Adjust the spacing between columns */ 
+div.filters-section {
+  flex: 1; 
+  display: flex;
+  width: 200px;
 }
-  

@@ -1,13 +1,23 @@
 import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
 import Sidebar from './Sidebar'
 import '../styles/dashStyles.css';
+import '../styles/expandedRecordsStyles.css'
 import axios from 'axios';
 
 function ExpandedRecord() {
   const [studentData, setStudentData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [showViolationForm, setShowViolationForm] = useState(false);
+  const [newViolation, setNewViolation] = useState({
+    violation: '',
+    type: '',
+    status: 'Pending',
+    remarks: ''
+  });
 
   // Use useParams to get the student ID from the URL 
   const { studentId } = useParams();
@@ -29,6 +39,31 @@ function ExpandedRecord() {
     fetchData();
   }, [studentId]);
 
+  const handleInputChange = (event) => {
+    setNewViolation({
+      ...newViolation,
+      [event.target.name]: event.target.value
+    }); 
+  };
+
+  const handleAddViolation = async (event) => {
+ 
+    try {
+      const response = await axios.post(`https://localhost:7096/api/records/addViolation/${studentId}`, newViolation);
+
+      const updatedStudentData = { ...studentData };
+      updatedStudentData.numberOfViolations++;
+
+      setStudentData(response.data);  
+      setNewViolation({ violation: '', type: '', status: 'Pending', remarks: '' });
+      setShowViolationForm(false);
+      setStudentData(updatedStudentData);
+
+    } catch (error) {
+      console.error("Error adding violation:", error);
+    }
+};
+    
   return (
 
     <div>
@@ -84,7 +119,57 @@ function ExpandedRecord() {
           ) : (
               <p>No violations recorded.</p>
           )}
-                  </div>
+            <button onClick={() => setShowOverlay(true)}>Add Violation</button>  
+
+            {showOverlay && (
+              <div className="overlay">
+                <div className="modal-content">
+                  <button className="close-button" onClick={() => setShowOverlay(false)}>X</button>
+
+                  <h2>Record Violation</h2>
+                  <form onSubmit={handleAddViolation}> 
+                    <div className="form-group">
+                      <label htmlFor="violation">Violation:</label>
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="violation" 
+                        name="violation"
+                        value={newViolation.violation}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="type">Type:</label>
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="type" 
+                        name="type"
+                        value={newViolation.type}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="remarks">Remarks:</label>
+                      <textarea
+                        className="form-control"
+                        id="remarks"
+                        name="remarks"
+                        value={newViolation.remarks}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <Button variant="primary" type="submit">
+                      Record Violation
+                    </Button>
+                  </form>
+                </div>
+              </div>
+            )}
+            </div>
               ) : (
                   <p>Error: Student data could not be retrieved.</p> 
               )
@@ -93,7 +178,6 @@ function ExpandedRecord() {
         )}
           </div>
         </div>
-        
     </div>
   );
 }
