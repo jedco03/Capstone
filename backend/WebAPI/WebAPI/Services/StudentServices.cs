@@ -71,5 +71,14 @@ namespace WebAPI.Services
             var filter = Builders<Student>.Filter.Eq(x => x.College, college);
             return await _studentCollection.Find(filter).ToListAsync();
         }
+        //violation acknowledgement for dean
+        public async Task<bool> AcknowledgeViolationAsync(string violationId)
+        {
+            var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.ViolationId == violationId);
+            var update = Builders<Student>.Update.Set("violations.$.acknowledged", true);
+
+            var result = await _studentCollection.UpdateOneAsync(filter, update);
+            return result.ModifiedCount > 0; // Return true if the update was successful
+        }
     }
 }

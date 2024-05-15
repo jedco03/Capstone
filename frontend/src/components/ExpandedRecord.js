@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button,   } from 'react-bootstrap';
 import Sidebar from './Sidebar'
 import '../styles/dashStyles.css';
 import '../styles/expandedRecordsStyles.css'
@@ -21,6 +21,8 @@ function ExpandedRecord() {
 
   // Use useParams to get the student ID from the URL 
   const { studentId } = useParams();
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +53,7 @@ function ExpandedRecord() {
     try {
       const response = await axios.post(`https://localhost:7096/api/records/addViolation/${studentId}`, newViolation);
 
+
       const updatedStudentData = { ...studentData };
       updatedStudentData.numberOfViolations++;
 
@@ -62,6 +65,12 @@ function ExpandedRecord() {
     } catch (error) {
       console.error("Error adding violation:", error);
     }
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  return date.toLocaleString('en-US', options);
 };
     
   return (
@@ -102,6 +111,8 @@ function ExpandedRecord() {
                               <th>Type</th>
                               <th>Status</th>
                               <th>Remarks</th>
+                              <th>Date</th>
+                              <th>Acknowledgement</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -111,6 +122,8 @@ function ExpandedRecord() {
                                   <td>{violation.type}</td>
                                   <td>{violation.status}</td> 
                                   <td>{violation.remarks}</td>
+                                  <td>{formatDate(violation.date)}</td> 
+                                  <td>{violation.acknowledged ? "Yes" : "No"}</td>
                               </tr>
                           ))}
                       </tbody>

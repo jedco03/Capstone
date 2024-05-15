@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import FetchRecords from '../fetchRecords';
+import FetchRecords from '../Dean/fetchRecordsDean';
 
 
 function DeanContent({ onExpand }) { 

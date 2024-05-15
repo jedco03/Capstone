@@ -41,3 +41,8 @@ table {
     padding: 20cap;
     border-radius: 20px;
   }
+
+  .acknowledged-text {
+    color: green;
+    font-weight: bold;
+  }

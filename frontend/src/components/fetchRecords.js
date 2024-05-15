@@ -109,7 +109,7 @@ return (
                       <td>{student.phoneNumber}</td>
                       <td>{student.guardian}</td>
                       <td>{student.numberOfViolations}</td> 
-                      <td><Link to={`/home/expanded-record/${student.studentNumber}`}>
+                      <td><Link to={`/home/expanded-record-admin/${student.studentNumber}`}>
                         Expand
                     </Link></td>
                     </tr>

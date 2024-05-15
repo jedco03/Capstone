@@ -47,9 +47,16 @@ namespace WebAPI.Models {
 
     public class Violation
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ViolationId { get; set; } = ObjectId.GenerateNewId().ToString();
         public string violation { get; set; }
         public string type { get; set; }
         public string status { get; set; }
         public string remarks { get; set; }
+        [BsonElement("date")]
+        public DateTime Date { get; set; } = DateTime.Now;
+        [BsonElement("acknowledged")]
+        public bool Acknowledged { get; set; } = false;
     }
 }

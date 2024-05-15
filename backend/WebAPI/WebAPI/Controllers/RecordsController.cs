@@ -115,6 +115,14 @@ namespace WebAPI.Controllers
             return Ok(students);
         }
 
+        //[Authorize(Policy = "DeanAccess")]
+        [HttpPut("acknowledge/{violationId}")]
+        public async Task<IActionResult> AcknowledgeViolation(string violationId)
+        {
+            var result = await _studentServices.AcknowledgeViolationAsync(violationId);
+            return result ? NoContent() : NotFound();
+        }
+
     }
  }
 
