@@ -1,8 +1,11 @@
+.filter-section {
+    width: 100%;
+}
 .custom-dropdown {
     position: absolute; /* Ensure absolute positioning for control */
     top: calc(100% + 5px); /* Position below the dropdown, adjust the offset */
     left: 0; /* Align with the left side */
-    width: auto;  /* Allow the width to adjust to content */
+    width: 100%;  /* Allow the width to adjust to content */
 }
 
 .custom-dropdown .select__menu { 
@@ -12,3 +15,33 @@
 .custom-dropdown .select__option {
     margin-top: 0; /* Reset top margin of options */
 }
+
+/* Styling for the label */
+.filter-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #526d82;
+    margin-bottom: 4px; /* Space below the label */
+  }
+  
+  /* Styling for the numeric input */
+  .count-input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 180px; /* Width specific for the input */
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .count-input:focus {
+    outline: none;
+    border-color: #008cba; /* Highlight border color */
+    box-shadow: 0 0 4px rgba(0, 140, 186, 0.5); /* Subtle shadow for focus */
+  }
+  
+  .count-input:hover {
+    border-color: #666; /* Darker border on hover */
+  }
+  

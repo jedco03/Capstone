@@ -1,5 +1,5 @@
 .content {
-    width: 75%;
+    width: 90%;
 }
 .content--header {
     display: flex;
@@ -15,23 +15,70 @@
     gap: 20px;
 }
 
+.content-wrapper {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 20px; /* Space between the left and right containers */
+}
+
+.left-container {
+    flex: 0 0 80%;
+    display: flex;
+    flex-direction: column; /* Arrange table and pagination vertically */
+}
+
+.right-container {
+    flex: 1; /* Takes up 1 part of the available space */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* You can add any specific styling for the right section */
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.pagination span {
+    font-size: 16px;
+}
+
 /* Basic styling for clarity */
 .recordsTable {
     flex: 1;
-    border-collapse: collapse; /* Make table cells collapse into a single border */
-    width: 100%;               /* Use the full available width */
-    margin-bottom: 20px;       /* Add some space below the table */
+    border-collapse: collapse; 
+    width: 100%;             
+    margin-bottom: 20px;    
 }
 
 .recordsTable th,
 .recordsTable td {
-    border: 1px solid #ddd;   /* Add a subtle border to cells */
-    padding: 8px;             /* Add cell padding for visual spacing  */
-    text-align: left;         /* Align text to the left by default */
+    border: none; 
+    padding: 8px;          
+    text-align: left;         
+}
+
+.recordsTable th {
+    border-bottom: 2px solid #ddd; /* Keep only horizontal borders for headers */
+}
+
+.recordsTable tr:not(:last-child) td {
+    border-bottom: 1px solid #ddd; /* Add horizontal borders between rows */
 }
 
 .recordsTable th { 
-    background-color: #f0f0f0; /* Light gray background for headers */
+    background-color: #ffffff; 
 }
 
 .search-box {
@@ -40,12 +87,12 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 200px;
+    width: 13vw;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 .search-box input {
-    border: none;
+    border: none !important;
     outline: none;
     background: transparent;
     padding: 5px;

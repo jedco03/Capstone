@@ -1,0 +1,215 @@
+/* Dashboard Wrapper */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 250px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content Section */
+.content-wrapper {
+    flex-grow: 1;
+    height: 100%;
+    overflow: auto;
+}
+
+/* List Container */
+.list-container {
+    padding: 20px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Table Styles */
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.reports-table th, .reports-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.reports-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Action Button */
+.expand-link {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.expand-link:hover {
+    background-color: #0056b3;
+}
+
+/* Ensure table is responsive */
+@media screen and (max-width: 768px) {
+    .reports-table {
+        font-size: 0.9rem;
+    }
+
+    .reports-table th, .reports-table td {
+        padding: 8px;
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Modal Content with Grid Layout */
+.modal-content {
+    background-color: white;
+    width: 80%;
+    max-width: 800px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#modalHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#modalStatus {
+    text-align: right;
+    width: 40%;
+}
+
+/* Modal Title */
+.modal-content h2 {
+    font-size: 1.8rem;
+    text-align: left;
+}
+
+/* Modal Details */
+.modal-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.modalStudNum {
+    text-align: left;
+}
+
+/* Modal Table Layout */
+.modal-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modal-table td,
+.modal-table th {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.modal-table td {
+    font-size: 1rem;
+}
+
+.table-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 12px;
+    background-color: #f4f4f4;
+}
+
+/* Modal Close Button */
+.close-modal-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-modal-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Proceed Button */
+.proceed-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.proceed-btn:hover {
+    background-color: #388e3c;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.viewed-report {
+    background-color: #f0f0f0 !important;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+}
+
+.tab-button.active {
+    color: #000;
+    border-bottom: 3px solid #007bff;
+}

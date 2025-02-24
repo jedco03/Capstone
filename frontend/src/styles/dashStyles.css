@@ -19,12 +19,12 @@ body {
     border-radius: 20px;
     padding: 2rem;
     width: 100%;
-    display: grid;
-    grid-template-columns: 70% 30%; /* 70% for the table, 30% for filters  */
-    gap: 20px; /* Add spacing between columns */
-    padding: 20px
+    display: flex;
+    grid-template-columns: 70% 30%;
+    gap: 20px; 
+    padding: 20px;
+    justify-content: center;
+    height: 95vh;
+    overflow: hidden;
 }
-.scrollable-table-container {
-    max-height: 200px;  /* Set the desired max height of the scrollable area */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
+

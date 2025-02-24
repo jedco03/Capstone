@@ -45,6 +45,19 @@ body { /* Or a more specific wrapper element if you prefer */
     padding: 30px;
   }
 
+  .inputcontainer {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
   .inputBox {
     position: relative;
     width: 250px;
@@ -55,7 +68,7 @@ body { /* Or a more specific wrapper element if you prefer */
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
-    background: #d7f3d5;
+    background: #ffffff;
     outline: none;
     color: black;
     font-size: 18px;
@@ -75,13 +88,13 @@ body { /* Or a more specific wrapper element if you prefer */
   
   .inputBox input:valid ~ span,
   .inputBox input:focus ~ span {
-    color: #55BA5F;
+    color: #000000;
     transform: translateX(10px) translateY(-7px);
     font-size: 11px;
     padding: 0 10px;
-    background-color: #d7f3d5;
-    border-left: 1px solid #55BA5F;
-    border-right: 1px solid #55BA5F;
+    background-color: #ffffff;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
   }
 
   .loginForm button {
@@ -107,7 +120,19 @@ body { /* Or a more specific wrapper element if you prefer */
     height: auto;
     margin-bottom: 5px; /* Space below the logo */
   }
+
   .SACLOGO { 
     margin-bottom: 20px;
     text-align: center; 
+  }
+
+  .roleSelect {
+    background-color: #fffafa;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 10px 40px 10px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
   }

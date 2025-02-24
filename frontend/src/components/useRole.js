@@ -5,6 +5,7 @@ export const useRole = () => {
 
     useEffect(() => {
         const storedRole = localStorage.getItem('userRole');
+        console.log("Passed Role:", storedRole);
         setRole(storedRole);
     }, []);
 

@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace WebAPI.Models { 
-
+namespace WebAPI.Models
+{
     [BsonIgnoreExtraElements]
     public class Student
     {
@@ -12,6 +12,8 @@ namespace WebAPI.Models {
 
         [BsonElement("studentNumber")]
         public string StudentNumber { get; set; } = "Student Number";
+        [BsonElement("email")]
+        public string Email { get; set; } = "Student Email";
 
         [BsonElement("firstName")]
         public string FirstName { get; set; } = "Student First Name";
@@ -23,10 +25,13 @@ namespace WebAPI.Models {
         public string MiddleName { get; set; } = "Student Middle Name";
 
         [BsonElement("year")]
-        public int Year { get; set; } = 1;
+        public string YearId { get; set; } = string.Empty;
 
         [BsonElement("college")]
-        public string College { get; set; } = "Department";
+        public string CollegeId { get; set; } = string.Empty;
+
+        [BsonElement("course")]
+        public string CourseId { get; set; } = string.Empty;
 
         [BsonElement("gender")]
         public string Gender { get; set; } = "Gender";
@@ -41,22 +46,29 @@ namespace WebAPI.Models {
         public int NumberOfViolations { get; set; } = 0;
 
         [BsonElement("violations")]
-        public List<Violation> Violations { get; set; } = new List<Violation>();
-
+        public List<Violation> Violations { get; set; } = new List<Violation>(); 
     }
 
     public class Violation
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ViolationId { get; set; } = ObjectId.GenerateNewId().ToString();
-        public string violation { get; set; }
-        public string type { get; set; }
-        public string status { get; set; }
-        public string remarks { get; set; }
+        public string RecordId { get; set; } = ObjectId.GenerateNewId().ToString(); // Unique for each record
+
+        [BsonElement("violationId")]
+        public string ViolationId { get; set; } = string.Empty;
+
+        [BsonElement("remarks")]
+        public string Remarks { get; set; } = string.Empty;
+
         [BsonElement("date")]
         public DateTime Date { get; set; } = DateTime.Now;
+
         [BsonElement("acknowledged")]
         public bool Acknowledged { get; set; } = false;
+        [BsonElement("IsIDInPossession")]
+        public bool IsIDInPossession { get; set; } = false;
+        [BsonElement("guardName")]
+        public string guardName { get; set; } = string.Empty;
     }
 }

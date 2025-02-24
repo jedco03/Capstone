@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
-import '../styles/addStyles.css'
+import { useNavigate } from 'react-router-dom';
+import '../styles/addStyles.css';
 
 const AddRecordForm = () => {
     const [studentNumber, setStudentNumber] = useState('');
@@ -8,52 +9,100 @@ const AddRecordForm = () => {
     const [lastName, setLastName] = useState('');
     const [middleName, setMiddleName] = useState('');
     const [colleges, setColleges] = useState([]);
+    const [courses, setCourses] = useState([]); // ✅ Added Course State
+    const [years, setYears] = useState([]);
     const [selectedCollege, setSelectedCollege] = useState(''); 
-    const [selectedYear, setSelectedYear] = useState(0);
+    const [selectedCourse, setSelectedCourse] = useState(''); // ✅ Added Selected Course
+    const [selectedYear, setSelectedYear] = useState('');
     const [genders, setGenders] = useState(['Male', 'Female']); 
-  const [selectedGender, setSelectedGender] = useState('');
+    const [selectedGender, setSelectedGender] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [guardian, setGuardian] = useState('');
+    const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
-    //Communicate with API
+    useEffect(() => {
+        const fetchDropdownData = async () => {
+            try {
+                const [collegeResponse, yearResponse, courseResponse] = await Promise.all([
+                    axios.get('https://localhost:7096/api/colleges'), 
+                    axios.get('https://localhost:7096/api/years'),
+                    axios.get('https://localhost:7096/api/courses') // ✅ Fetch courses
+                ]);
+                
+                console.log("Fetched Colleges:", collegeResponse.data);
+                console.log("Fetched Years:", yearResponse.data);
+                console.log("Fetched Courses:", courseResponse.data);
+
+                setColleges(collegeResponse.data);
+                setYears(yearResponse.data);
+                setCourses(courseResponse.data); // ✅ Store courses in state
+            } catch (error) {
+                console.error('Error fetching dropdown data:', error);
+            }
+        };
+        fetchDropdownData();
+    }, []);
+
+    // Submit Form
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
+        console.log("Submitting Student Data:", {
+            studentNumber,
+            firstName,
+            lastName,
+            middleName,
+            yearId: selectedYear,
+            collegeId: selectedCollege,
+            courseId: selectedCourse, // ✅ Added course ID
+            gender: selectedGender,
+            phoneNumber,
+            guardian,
+            violations: []
+        });
+
         const newStudent = {
             studentNumber,
             firstName,
             lastName,
             middleName,
-            selectedYear,
-            college: selectedCollege, 
+            yearId: selectedYear,
+            collegeId: selectedCollege,
+            courseId: selectedCourse, // ✅ Send course ID
             gender: selectedGender,
             phoneNumber,
             guardian,
             violations: []
         };
-    
+
         try {
-            console.log('Student data to be sent:', newStudent);
             const response = await axios.post('https://localhost:7096/api/records', newStudent);
             console.log('Record Created:', response.data);
+            setIsSuccessModalVisible(true);
         } catch (error) {
-            console.error('Error creating record:', error);    
+            console.error('Error creating record:', error);
+            setErrorMessage(error.response?.data?.message || 'An error occurred while adding the record.');
+            setIsErrorModalVisible(true);
         }
-    }
+    };
 
-    //Dropdown
-    useEffect(() => {
-        const fetchColleges = async () => {
-          setColleges(['CEIS', 'SLCN', 'CBMA', 'CHTM', 'CASE', 'CAHS', 'CMT']); 
-        };
-        fetchColleges();
-      }, []);
+    // Filter courses based on selected college
+    const filteredCourses = courses.filter(course => course.college === selectedCollege);
+
+    // Redirect after clicking modal button
+    const handleRedirect = () => {
+        navigate('/home'); 
+    };
 
     return (
         <div className="container"> 
             <h2 className="form-title">Add Student Record</h2> 
-            <form onSubmit={handleSubmit} className="add-record-form"> 
+            <form onSubmit={handleSubmit} className="add-record-form">
 
+                {/* Student Number */}
                 <div className="form-group">
                     <label htmlFor="studentnumber">Student Number:</label>
                     <input 
@@ -62,8 +111,9 @@ const AddRecordForm = () => {
                         value={studentNumber} 
                         onChange={(e) => setStudentNumber(e.target.value)} 
                     />
-                </div>        
+                </div>
 
+                {/* First, Middle, Last Name */}
                 <div className="form-group">
                     <label htmlFor="firstName">First Name:</label>
                     <input 
@@ -73,7 +123,6 @@ const AddRecordForm = () => {
                         onChange={(e) => setFirstName(e.target.value)} 
                     />
                 </div>
-        
                 <div className="form-group">
                     <label htmlFor="middleName">Middle Name:</label>
                     <input 
@@ -83,7 +132,6 @@ const AddRecordForm = () => {
                         onChange={(e) => setMiddleName(e.target.value)} 
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="lastName">Last Name:</label>
                     <input 
@@ -93,18 +141,21 @@ const AddRecordForm = () => {
                         onChange={(e) => setLastName(e.target.value)} 
                     />
                 </div>
-        
+
+                {/* Year, College, Course, Gender */}
                 <div className="form-group"> 
                     <label htmlFor="year">Year:</label> 
                     <select 
                         id="year" 
                         value={selectedYear} 
-                        onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                        onChange={(e) => setSelectedYear(e.target.value)}
                     >
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
+                        <option value="">Select Year</option>
+                        {years.map((year) => (
+                            <option key={year._id} value={year.id}>
+                                {year.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -115,29 +166,50 @@ const AddRecordForm = () => {
                         value={selectedCollege} 
                         onChange={(e) => setSelectedCollege(e.target.value)}
                     >
+                        <option value="">Select College</option>
                         {colleges.map((college) => (
-                            <option key={college} value={college}>
-                                {college}
+                            <option key={college._id} value={college.id}>
+                                {college.name}
                             </option>
                         ))}
                     </select>
                 </div>
-        
+
+                {/* ✅ Course Dropdown */}
+                <div className="form-group">
+                    <label htmlFor="course">Course:</label>
+                    <select 
+                        id="course"
+                        value={selectedCourse} 
+                        onChange={(e) => setSelectedCourse(e.target.value)}
+                        disabled={!selectedCollege} // Disable until a college is selected
+                    >
+                        <option value="">Select Course</option>
+                        {filteredCourses.map((course) => (
+                            <option key={course._id} value={course.id}>
+                                {course.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className="form-group">
                     <label htmlFor="gender">Gender:</label>
                     <select 
-                    id="gender"
-                    value={selectedGender} 
-                    onChange={(e) => setSelectedGender(e.target.value)}
+                        id="gender"
+                        value={selectedGender} 
+                        onChange={(e) => setSelectedGender(e.target.value)}
                     >
-                    {genders.map((gender) => (
-                        <option key={gender} value={gender}>
-                        {gender}
-                        </option>
-                    ))}
+                        <option value="">Select Gender</option>
+                        {genders.map((gender) => (
+                            <option key={gender} value={gender}>
+                                {gender}
+                            </option>
+                        ))}
                     </select>
                 </div>
-        
+
+                {/* Phone Number, Guardian */}
                 <div className="form-group">
                     <label htmlFor="phonenumber">Phone Number:</label>
                     <input 
@@ -157,14 +229,35 @@ const AddRecordForm = () => {
                         onChange={(e) => setGuardian(e.target.value)} 
                     />
                 </div>
-        
-        
-                <button type="submit">Add Record</button>
+
+                {/* Submit Button */}
+                <button type="submit" id='AddrecordButton'>Add Record</button>
             </form>
+
+            {/* Success Modal */}
+            {isSuccessModalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <img src="/success.png" alt="Success" className="modal-image" />
+                        <h2>You successfully added the record!</h2>
+                        <button className="modal-button" onClick={handleRedirect}>Go to Records</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Error Modal */}
+            {isErrorModalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <img src="/fail.png" alt="Error" className="modal-image" />
+                        <h2>Error Adding Record</h2>
+                        <p>{errorMessage}</p>
+                        <button className="modal-button" onClick={() => setIsErrorModalVisible(false)}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
-
 };
 
-export default AddRecordForm;  
-
+export default AddRecordForm;

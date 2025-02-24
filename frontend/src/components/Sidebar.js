@@ -19,7 +19,7 @@ const Sidebar = () => {
                 <BiStats className='icon'/>
                 Reports Summary
             </a>
-            <a href='#' className='item'>
+            <a href='/reports' className='item'>
                 <BiMessage className='icon'/>
                 Reports Inbox
             </a>

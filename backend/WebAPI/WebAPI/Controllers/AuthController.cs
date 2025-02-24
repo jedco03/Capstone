@@ -28,13 +28,27 @@ namespace WebAPI.Controllers
 
                 return NotFound();
             }
-            if (!VerifyPasswordHash(credentials.Password, user.PasswordHash)) // Replace with your password verification function
+            if (!VerifyPasswordHash(credentials.Password, user.PasswordHash)) 
             {
                 return Unauthorized();
             }
 
-            // Generate JWT upon successful authentication
-            return Ok(new { message = "Authentication Successful", role = user.role });
+            var selectedRole = HttpContext.Request.Headers["SelectedRole"].ToString();
+            if (string.IsNullOrEmpty(selectedRole) || !string.Equals(selectedRole, user.role, StringComparison.OrdinalIgnoreCase))
+            {
+                return Forbid("Role mismatch"); // Role doesn't match
+            }
+
+            // Authentication successful
+            return Ok(new
+            {
+                message = "Authentication Successful",
+                role = user.role,
+                username = user.username,
+                name = user.Name,
+                email = user.Email,
+                college = user.college
+            });
         }
         private bool VerifyPasswordHash(string providedPassword, string storedPasswordHash)
         {

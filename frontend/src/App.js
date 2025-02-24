@@ -5,6 +5,7 @@ import HomePage from './pages/Home';
 import ExpandedRecord from './components/ExpandedRecord';
 import ExpandedRecordDean from './components/Dean/ExpandedRecordsDean';
 import AddRecordPage from './pages/AddRecord';
+import GuardContent from './components/Guard/GuardContent';
 import './myStyles.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/home/expanded-record-admin/:studentId" element={<ExpandedRecord />} />
           <Route path="/home/expanded-record-dean/:studentId" element={<ExpandedRecordDean />} />
           <Route path="/addrecord" element={<AddRecordPage />} />
+          <Route path="/reports" element={<GuardContent />} />
           {/*<Route path="/reports-summary" element={<ReportsSummaryPage />} /> 
           {/* ... routes for other pages */}
         </Routes>
