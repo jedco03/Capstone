@@ -25,4 +25,24 @@ public class CollegeService
     {
         return await _collegeCollection.Find(c => c.Id == id).FirstOrDefaultAsync();
     }
+
+    // Add a new college
+    public async Task CreateCollegeAsync(College college)
+    {
+        await _collegeCollection.InsertOneAsync(college);
+    }
+
+    // Update an existing college
+    public async Task UpdateCollegeAsync(string id, College college)
+    {
+        await _collegeCollection.ReplaceOneAsync(c => c.Id == id, college);
+    }
+
+    // Delete a college
+    public async Task DeleteCollegeAsync(string id)
+    {
+        await _collegeCollection.DeleteOneAsync(c => c.Id == id);
+    }
+
+
 }

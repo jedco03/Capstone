@@ -1,0 +1,411 @@
+.file-management-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #D7F3D5;
+    border-radius: 10px;
+    width: 85vw;
+    height: 95vh;
+    overflow: hidden; /* Prevents the container from expanding */
+}
+
+/* Tabs */
+.FM-tabs-container {
+    display: flex;
+    gap: 5px;
+}
+
+.FM-tab-button {
+    background-color: #f5f5f5;
+    padding: 8px 15px;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.FM-tab-button.active {
+    background-color: white;
+    box-shadow: none;
+}
+
+.FM-tab-button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Tab Content */
+/* Ensure tab content stays inside the container */
+.FM-tab-content {
+    background-color: white;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevents stretching */
+}
+
+/* Table Wrapper: Prevents breaking the layout */
+.FM-table-wrapper {
+    flex-grow: 1; /* Ensures it expands without breaking */
+    overflow-y: auto; /* Makes only the table scroll */
+    max-height: 65vh; /* Prevents it from going beyond container */
+    border-radius: 5px;
+    background: white;
+}
+
+/* Table itself should not stretch beyond limits */
+.FM-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.FM-table th,
+.FM-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Keep table header fixed when scrolling */
+.FM-table thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+.FM-table-container {
+    background-color: white;
+    height: 95vh;
+    border-radius: 0 20px 20px 20px;
+    width: 85vw;
+    padding: 20px;
+}
+
+
+.FM-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .FM-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .FM-modal input {
+    display: block;
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+  }
+  
+  .FM-modal button {
+    margin: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .FM-add-account-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px
+  }
+  .FM-add-label {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .FM-add-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .FM-add-button:hover {
+    background-color: #0056b3;
+  }
+
+
+  /* Overlay */
+.FM-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .FM-modal-content {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 90%;
+    position: relative;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+  
+  .FM-modal-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .FM-modal-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Close Button */
+  .FM-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .FM-close-button:hover {
+    color: #000;
+  }
+  
+  /* Overlay */
+.FM-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .FM-modal-content {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 90%;
+    position: relative;
+    animation: fadeIn 0.2s ease-in-out;
+    text-align: left;
+  }
+  
+  .FM-modal-content p {
+    color: gray;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  /* Form Layout */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Row Layout */
+  .FM-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Full Width Element */
+  .FM-full-width {
+    width: 100%;
+  }
+  
+  /* Form Group */
+  .FM-form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  /* Labels */
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Input Fields */
+  .FM-input,
+  .FM-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    appearance: none;
+  }
+  
+  .FM-input:focus,
+  .FM-select:focus {
+    outline: none;
+    border-color: #999;
+  }
+  
+  /* Button Group */
+  .FM-button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  /* Buttons */
+  .FM-cancel-btn,
+  .FM-submit-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .FM-cancel-btn {
+    background: #f4f4f4;
+    color: #333;
+  }
+  
+  .FM-cancel-btn:hover {
+    background: #e0e0e0;
+  }
+  
+  .FM-submit-btn {
+    background: #ccc;
+    color: white;
+    cursor: not-allowed;
+  }
+  
+  /* Close Button */
+  .FM-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .FM-close-button:hover {
+    color: #000;
+  }
+  
+  .FM-action-menu {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .FM-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+  }
+  
+  .FM-dropdown-menu {
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .FM-dropdown-menu button {
+    width: 100%;
+    text-align: left;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .FM-dropdown-menu button:hover {
+    background-color: #ddd;
+  }
+
+  .success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .success-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .success-modal h3 {
+    margin-bottom: 10px;
+    color: #4caf50; /* Green color for success */
+  }
+  
+  .success-modal button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .success-modal button:hover {
+    background-color: #45a049;
+  }

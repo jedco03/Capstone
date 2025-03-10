@@ -89,7 +89,6 @@
     align-items: center;
     width: 13vw;
     margin-bottom: 20px;
-    margin-top: 20px;
 }
 .search-box input {
     border: none !important;
@@ -122,4 +121,12 @@ div.filters-section {
   flex: 1; 
   display: flex;
   width: 200px;
+}
+
+.highlight-red{
+    background-color: rgba(212, 133, 133, 0.329);
+}
+
+.highlight-yellow{
+    color: orange;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useRole, setUseRole } from './useRole'
+import api from './axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import '../myStyles.css';
 
@@ -13,68 +13,63 @@ function LoginForm({ isAuthenticated, setIsAuthenticated }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    const selectedRole = document.getElementById('roleSelect').value;
-  
     try {
-      const response = await axios.post(
+      const response = await api.post(
         'https://localhost:7096/api/auth/authenticate',
-        { username, password }, // Credentials
-        { headers: { SelectedRole: selectedRole } } // Include selected role in headers
+        { username, password }
       );
-      
-      localStorage.setItem('userRole', selectedRole);
-      setLoginError(null); // Clear previous errors
-      console.log('Login successful!');
-      console.log(response.data.role, " and ", selectedRole);
-      setIsAuthenticated(true);
   
-      // Proceed only if roles match
-      if (response.data.role === selectedRole) {
-        navigate('/home');
+      if (response.data.token) { // Ensure token is received
+        localStorage.setItem('token', response.data.token);  // Store JWT token
+        localStorage.setItem('userRole', response.data.role); // Store user role
+        localStorage.setItem('userId', response.data.userId); 
+        localStorage.setItem('userName', response.data.name);
+        console.log('Login successful!');
+        console.log("Logged in as:", response.data.role);
+        setIsAuthenticated(true);
+        
+        navigate('/home'); // Redirect to home
       } else {
-        setLoginError("Role mismatch. Please select the correct role.");
+        console.error("No token received from server.");
+        setLoginError("Authentication failed.");
       }
+  
     } catch (error) {
       console.log(error);
-      setLoginError("Invalid username, password");
+      setLoginError("Invalid username or password");
     }
   };
-
+  
+  
 
   return (
     <div>
-      <div onSubmit={handleSubmit} className='loginForm'>
+      <div className='loginForm'>
         <img src="/SACLOGO.png" alt="Login Logo"/>
-          <div class="inputcontainer">
-            <div className='inputBox'>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)} 
-                  required="required" 
-                />
-                <span>Username</span>
-              </div>
-              <div>
-                <div className='inputBox'>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required="required" 
-                  />
-                  <span>Password</span>
-                </div>
-              </div>
-              <button type="button" onClick={handleSubmit}>Login</button> 
-              {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
-              <select id="roleSelect" class="roleSelect">
-                <option value="Dean">Dean</option>
-                <option value="SAC">SAC</option>
-              </select>
+        <div className="inputcontainer">
+          <div className='inputBox'>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} 
+              required
+            />
+            <span>Username</span>
           </div>
+          <div className='inputBox'>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span>Password</span>
+          </div>
+          <button type="button" onClick={handleSubmit}>Login</button> 
+          {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+        </div>
       </div>
     </div>
   );

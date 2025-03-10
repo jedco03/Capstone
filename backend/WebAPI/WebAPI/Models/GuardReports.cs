@@ -19,7 +19,7 @@ namespace WebAPI.Models
         public string gender { get; set; }
         public string phoneNumber { get; set; }
         public string guardian { get; set; }
-        public string status { get; set; }
+        public string status { get; set; } = "Pending";
         public bool IsIDInPossession { get; set; }
         public DateTime submissionDate { get; set; }
         public string guardName { get; set; }

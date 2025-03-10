@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom';
 import '../styles/addStyles.css';
+import api from './axiosInstance';
 
 const AddRecordForm = () => {
     const [studentNumber, setStudentNumber] = useState('');
@@ -10,6 +11,7 @@ const AddRecordForm = () => {
     const [middleName, setMiddleName] = useState('');
     const [colleges, setColleges] = useState([]);
     const [courses, setCourses] = useState([]); // ✅ Added Course State
+    const [email, setEmail] = useState([]);
     const [years, setYears] = useState([]);
     const [selectedCollege, setSelectedCollege] = useState(''); 
     const [selectedCourse, setSelectedCourse] = useState(''); // ✅ Added Selected Course
@@ -52,6 +54,7 @@ const AddRecordForm = () => {
 
         console.log("Submitting Student Data:", {
             studentNumber,
+            email,
             firstName,
             lastName,
             middleName,
@@ -66,6 +69,7 @@ const AddRecordForm = () => {
 
         const newStudent = {
             studentNumber,
+            email,
             firstName,
             lastName,
             middleName,
@@ -79,7 +83,7 @@ const AddRecordForm = () => {
         };
 
         try {
-            const response = await axios.post('https://localhost:7096/api/records', newStudent);
+            const response = await api.post('/records', newStudent);
             console.log('Record Created:', response.data);
             setIsSuccessModalVisible(true);
         } catch (error) {
@@ -110,6 +114,13 @@ const AddRecordForm = () => {
                         id="studentnumber" 
                         value={studentNumber} 
                         onChange={(e) => setStudentNumber(e.target.value)} 
+                    />
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        type="text" 
+                        id="studentemail" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
                     />
                 </div>
 

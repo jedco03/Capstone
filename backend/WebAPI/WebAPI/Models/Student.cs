@@ -63,6 +63,8 @@ namespace WebAPI.Models
 
         [BsonElement("date")]
         public DateTime Date { get; set; } = DateTime.Now;
+        [BsonElement("status")]
+        public string Status { get; set; }
 
         [BsonElement("acknowledged")]
         public bool Acknowledged { get; set; } = false;

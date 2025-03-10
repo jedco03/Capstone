@@ -5,7 +5,8 @@ namespace WebAPI.Models
 {
     public class User
     {
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)] 
+        public string Id { get; set; } = string.Empty;
         [BsonElement("username")]
         public string username { get; set; }
         [BsonElement("password")]

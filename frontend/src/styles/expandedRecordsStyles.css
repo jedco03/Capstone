@@ -166,7 +166,6 @@ label {
 .expanded-submit-btn {
   background: #ccc;
   color: white;
-  cursor: not-allowed; /* Disabled state */
 }
 
 /* Acknowledged text */
@@ -183,7 +182,7 @@ label {
 
 /* Student Information */
 .studentInformation p {
-  font-size: 28px;
+  font-size: 24px;
 }
 
 /* Add Violation Button */
@@ -207,6 +206,21 @@ label {
 .addViolationBtn button:hover {
   background-color: #3a8041;
 }
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 0;
+  color: #000;
+}
+
+.dropdown-toggle:hover {
+  color: #007bff;
+}
+
+
 
 /* Animations */
 @keyframes fadeIn {

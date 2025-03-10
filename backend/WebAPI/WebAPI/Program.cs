@@ -1,72 +1,101 @@
 using WebAPI.Data;
 using WebAPI.Services;
-using WebAPI.Authorization;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
 using WebAPI.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure MongoDB settings
+builder.Services.Configure<DatabaseSettings>(
+    builder.Configuration.GetSection("ConnectionStrings")
+);
 
-// Configure MongoDB settings from appsettings.json
-builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionStrings"));
-
-// Register MongoDB Client as a Singleton service
 builder.Services.AddSingleton<IMongoClient>(sp =>
     new MongoClient(builder.Configuration.GetValue<string>("ConnectionStrings:Connection"))
 );
 
-// Register MongoDB collection for GuardReports as a Singleton service
 builder.Services.AddSingleton(sp =>
 {
     var databaseSettings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
     var mongoClient = sp.GetRequiredService<IMongoClient>();
     var database = mongoClient.GetDatabase(databaseSettings.DatabaseName);
-    return database.GetCollection<GuardReports>("GuardReports");  // Adjust to your collection name
+    return database.GetCollection<GuardReports>("GuardReports");
 });
 
-// Register other services
+// Register services
 builder.Services.AddSingleton<StudentServices>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddSingleton<CollegeService>();
 builder.Services.AddSingleton<YearService>();
 builder.Services.AddSingleton<CourseService>();
 builder.Services.AddSingleton<ViolationService>();
+builder.Services.AddSingleton<AuditTrailService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add CORS policy
+// CORS Policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
+    options.AddPolicy("AllowReactApp", policy =>
     {
-        builder.WithOrigins("http://localhost:3000")
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
-// Add Authorization policy for Dean access
+// **Fix: Get JWT Key Properly**
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings.GetValue<string>("Key");
+
+if (string.IsNullOrEmpty(secretKey))
+{
+    throw new ArgumentNullException("Jwt:Key", "JWT secret key is missing in appsettings.json.");
+}
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ValidateIssuer = true, // Set to true if using Issuer
+            ValidIssuer = "localhost", // Match the token's issuer
+            ValidateAudience = true, // Set to true if using Audience
+            ValidAudience = "localhost", // Match the token's audience
+            ValidateLifetime = true,
+            RoleClaimType = ClaimTypes.Role 
+        };
+    });
+
+
+// Authorization Policy
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("DeanAccess", policy =>
         policy.RequireAuthenticatedUser()
-              .RequireRole("dean")
-              .AddRequirements(new DeanAccessRequirement())); // Your custom requirement
+              .RequireRole("Dean"));
 });
 
 var app = builder.Build();
 
-// Enable CORS for the specified origin
-app.UseCors("AllowSpecificOrigin");
+// **Fix: Remove Duplicate `UseCors()`**
+app.UseCors("AllowReactApp");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -74,8 +103,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// **Correct Order of Middlewares**
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

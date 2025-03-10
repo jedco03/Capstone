@@ -5,6 +5,7 @@ import "../styles/dashStyles.css";
 import "../styles/content.css";
 import Filters from "./Filters";
 import { BiSearch } from "react-icons/bi";
+import { Table, Pagination } from "antd"; // Import Ant Design components
 
 function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
   const [data, setData] = useState([]);
@@ -37,33 +38,32 @@ function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
     fetchData();
   }, [apiEndpoint]);
 
-  // Fetch colleges and create a mapping 
+  // Fetch colleges and create a mapping
   useEffect(() => {
     const fetchColleges = async () => {
       try {
         const response = await axios.get("https://localhost:7096/api/colleges");
-  
+
         if (!Array.isArray(response.data)) {
           console.error("Unexpected API response format:", response.data);
           return;
         }
-  
+
         const collegeMap = {};
         response.data.forEach((college, index) => {
-  
           if (college.name && college.code) {
             collegeMap[college.name] = college.code;
           } else {
             console.warn(`College at index ${index} is missing name/code:`, college);
           }
         });
-  
+
         setCollegesMap(collegeMap);
       } catch (error) {
         console.error("Error fetching colleges:", error);
       }
     };
-  
+
     fetchColleges();
   }, [collegesApiEndpoint]);
 
@@ -71,8 +71,7 @@ function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
   useEffect(() => {
     let filteredData = data.map((student) => ({
       ...student,
-      collegeId: collegesMap[student.collegeId] || student.collegeId, 
-      yearId: student.yearId.replace("Year", " Year"), 
+      collegeId: collegesMap[student.collegeId] || student.collegeId,
     }));
 
     if (searchTerm) {
@@ -80,27 +79,93 @@ function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
         student.studentNumber.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
+
+    // College Filter
     if (Object.keys(checkedColleges).length > 0) {
       filteredData = filteredData.filter(
         (student) => checkedColleges[student.collegeId]
       );
     }
+
+    // Year Filter
     if (Object.keys(checkedYears).length > 0) {
-      filteredData = filteredData.filter((student) => checkedYears[student.yearId]);
+      filteredData = filteredData.filter((student) => {
+        return checkedYears[student.yearId];
+      });
     }
+
+    // Count Filter
     if (count > 0) {
       filteredData = filteredData.filter(
         (student) => student.numberOfViolations === count
       );
     }
 
+    // Sort by number of violations (highest to lowest)
+    filteredData.sort((a, b) => b.numberOfViolations - a.numberOfViolations);
+
     setTableData(filteredData);
   }, [data, collegesMap, searchTerm, checkedColleges, checkedYears, count]);
 
-  // Paginate records
-  const indexOfLastRecord = currentPage * recordsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = tableData.slice(indexOfFirstRecord, indexOfLastRecord);
+  // Columns for the Ant Design Table
+  const columns = [
+    {
+      title: "Student No.",
+      dataIndex: "studentNumber",
+      key: "studentNumber",
+    },
+    {
+      title: "Name",
+      key: "name",
+      render: (text, record) => (
+        `${record.firstName} ${record.middleName} ${record.lastName}`
+      ),
+    },
+    {
+      title: "College",
+      dataIndex: "collegeId",
+      key: "collegeId",
+    },
+    {
+      title: "Year",
+      dataIndex: "yearId",
+      key: "yearId",
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Phone No.",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Guardian",
+      dataIndex: "guardian",
+      key: "guardian",
+    },
+    {
+      title: "Count",
+      dataIndex: "numberOfViolations",
+      key: "numberOfViolations",
+    },
+    {
+      title: "Expand",
+      key: "expand",
+      render: (text, record) => (
+        <Link to={`/home/expanded-record-admin/${record.studentNumber}`}>
+          Expand
+        </Link>
+      ),
+    },
+  ];
+
+  // Pagination change handler
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="content-wrapper">
@@ -117,66 +182,29 @@ function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
           <BiSearch className="icon" />
         </div>
 
+        {/* Ant Design Table */}
         <div className="table-section">
-          <table className="recordsTable">
-            <thead>
-              <tr>
-                <th>Student No.</th>
-                <th>Name</th>
-                <th>College</th>
-                <th>Year</th>
-                <th>Gender</th>
-                <th>Phone No.</th>
-                <th>Guardian</th>
-                <th>Count</th>
-                <th>Expand</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentRecords.length > 0 ? (
-                currentRecords.map((student) => (
-                  <tr key={student.id}>
-                    <td>{student.studentNumber}</td>
-                    <td>
-                      {student.firstName} {student.middleName} {student.lastName}
-                    </td>
-                    <td>{collegesMap[student.collegeId] || student.collegeId}</td>
-                    <td>{student.yearId}</td>
-                    <td>{student.gender}</td>
-                    <td>{student.phoneNumber}</td>
-                    <td>{student.guardian}</td>
-                    <td>{student.numberOfViolations}</td>
-                    <td>
-                      <Link to={`/home/expanded-record-admin/${student.studentNumber}`}>
-                        Expand
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="9">No matching records found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination Section */}
-        <div className="pagination">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          <span>Page {currentPage}</span>
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === Math.ceil(tableData.length / recordsPerPage)}
-          >
-            Next
-          </button>
+          <Table
+            columns={columns}
+            dataSource={tableData}
+            pagination={{
+              current: currentPage,
+              pageSize: recordsPerPage,
+              total: tableData.length,
+              onChange: handlePageChange,
+            }}
+            rowKey="id"
+            loading={isLoading}
+            locale={{ emptyText: "No matching records found" }}
+            rowClassName={(record) => {
+              if (record.numberOfViolations >= 3) {
+                return "highlight-red"; // Apply red highlight for 3+ violations
+              } else if (record.numberOfViolations === 2) {
+                return "highlight-yellow"; // Apply yellow highlight for 2 violations
+              }
+              return ""; // No highlight for other records
+            }}
+          />
         </div>
       </div>
 

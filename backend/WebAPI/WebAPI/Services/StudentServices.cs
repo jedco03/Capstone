@@ -14,6 +14,7 @@ namespace WebAPI.Services
         private readonly IMongoCollection<Year> _yearCollection;
         private readonly IMongoCollection<Course> _courseCollection;
         private readonly IMongoCollection<ViolationType> _violationCollection;
+        private readonly IMongoCollection<GuardReports> _guardReportsCollection;
         private readonly CollegeService _collegeService;
         private readonly YearService _yearService;
         private readonly ViolationService _violationService;
@@ -134,6 +135,41 @@ namespace WebAPI.Services
             await _studentCollection.ReplaceOneAsync(x => x.Id == id, updateStudent);
         }
 
+        public async Task UpdateByStudentNumberAsync(string studno, Student updateStudent)
+        {
+            await _studentCollection.ReplaceOneAsync(x => x.StudentNumber == studno, updateStudent);
+        }
+
+        public async Task<Violation> GetViolationByRecordIdAsync(string recordId)
+        {
+            Console.WriteLine($"Fetching violation with RecordId: {recordId}");
+
+            // Find the student whose violations array contains the given RecordId
+            var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.RecordId == recordId);
+
+            // Find the student
+            var student = await _studentCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (student == null)
+            {
+                Console.WriteLine("Student not found.");
+                return null; // Student not found
+            }
+
+            Console.WriteLine($"Student found: {student.StudentNumber}");
+
+            // Find the specific violation
+            var violation = student.Violations?.FirstOrDefault(v => v.RecordId == recordId);
+
+            if (violation == null)
+            {
+                Console.WriteLine("Violation not found in student's violations list.");
+                return null; // Violation not found
+            }
+
+            Console.WriteLine($"Violation found: {violation.RecordId}");
+            return violation;
+        }
 
         public async Task<List<Student>> GetStudentsByCollegeAsync(string collegeId)
         {
@@ -160,13 +196,52 @@ namespace WebAPI.Services
             }).ToList();
         }
 
-        public async Task<bool> AcknowledgeViolationAsync(string violationId)
+        public async Task<bool> AcknowledgeViolationAsync(string recordId)
         {
-            var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.ViolationId == violationId);
+            var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.RecordId == recordId);
             var update = Builders<Student>.Update.Set("violations.$.acknowledged", true);
 
             var result = await _studentCollection.UpdateOneAsync(filter, update);
             return result.ModifiedCount > 0;
         }
+
+
+        public async Task<(bool Success, string Studno)> MarkViolationAsResolvedAsync(string recordId)
+        {
+            // Find the student whose violations array contains the given RecordId
+            var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.RecordId == recordId);
+
+            // Find the student to get the student number (studno)
+            var student = await _studentCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (student == null)
+            {
+                return (false, null); // Student not found
+            }
+
+            // Update the status of the matched violation to "Resolved"
+            var update = Builders<Student>.Update.Set("Violations.$.Status", "Resolved");
+
+            // Execute the update
+            var result = await _studentCollection.UpdateOneAsync(filter, update);
+
+            // Return true if the update was successful, along with the student number
+            return (result.ModifiedCount > 0, student.StudentNumber);
+        }
+        public async Task MarkReportsAsPassed(List<string> reportIds)
+        {
+            var filter = Builders<GuardReports>.Filter.In(r => r.Id, reportIds);
+            var update = Builders<GuardReports>.Update
+                .Set(r => r.status, "Passed")
+                .Set(r => r.isPassed, true);
+
+            var result = await _guardReportsCollection.UpdateManyAsync(filter, update);
+
+            if (result.ModifiedCount == 0)
+            {
+                throw new Exception("Failed to update report statuses.");
+            }
+        }
+
     }
 }

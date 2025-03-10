@@ -15,7 +15,7 @@ function Filters({
   const collegeOptions = colleges.map(college => ({ value: college, label: college }));
   const yearOptions = years.map(year => ({ value: year, label: year }));
 
-  // Function to transform selected options back to checkedColleges format
+  // Function to transform selected options back to checkedColleges or checkedYears format
   const handleDropdownChange = (selectedOptions, filterType) => {
     const updatedChecked = {};
     selectedOptions.forEach(option => {
@@ -59,9 +59,9 @@ function Filters({
         <input
           type="number"
           value={count}
-          onChange={(e) => onCountChange(e.target.value)}
-          min="0" 
-          step="1" 
+          onChange={(e) => onCountChange(Number(e.target.value))}
+          min="0"
+          step="1"
           className="count-input"
         />
       </div>

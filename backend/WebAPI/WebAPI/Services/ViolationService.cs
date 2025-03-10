@@ -33,7 +33,15 @@ namespace WebAPI.Services
 
         public async Task UpdateViolationAsync(string id, ViolationType updatedViolation)
         {
-            await _violationCollection.ReplaceOneAsync(v => v.Id == id, updatedViolation);
+            var filter = Builders<ViolationType>.Filter.Eq(v => v.Id, id);
+
+            // Ensure `_id` is not being changed
+            updatedViolation.Id = id; // Assign existing ID
+            var updateDefinition = Builders<ViolationType>.Update
+                .Set(v => v.Name, updatedViolation.Name)
+                .Set(v => v.Type, updatedViolation.Type); // Add other fields as needed
+
+            await _violationCollection.UpdateOneAsync(filter, updateDefinition);
         }
 
         public async Task DeleteViolationAsync(string id)
