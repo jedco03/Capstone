@@ -33,6 +33,11 @@ const FileManagement = () => {
   const [semesters, setSemesters] = useState([]);
   const [showSemesterModal, setShowSemesterModal] = useState(false);
   const [semesterToEdit, setSemesterToEdit] = useState(null);
+  const [loadingColleges, setLoadingColleges] = useState(false);
+  const [loadingCourses, setLoadingCourses] = useState(false);
+  const [loadingViolations, setLoadingViolations] = useState(false);
+  const [loadingAccounts, setLoadingAccounts] = useState(false);
+  const [loadingSemesters, setLoadingSemesters] = useState(false);
   const [courseData, setCourseData] = useState({
     id: "",
     name: "",
@@ -62,7 +67,7 @@ const FileManagement = () => {
   }, [activeTab]);
 
   const fetchColleges = async () => {
-    setLoading(true);
+    setLoadingColleges(true); // Start loading
     setError("");
     try {
       const response = await axios.get("https://localhost:7096/api/colleges");
@@ -71,23 +76,11 @@ const FileManagement = () => {
     } catch (err) {
       setError("Failed to fetch colleges.");
     }
-    setLoading(false);
-  };
-
-  const fetchCourses = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const response = await axios.get("https://localhost:7096/api/courses");
-      setCourses(response.data);
-    } catch (err) {
-      setError("Failed to fetch courses.");
-    }
-    setLoading(false);
+    setLoadingColleges(false); // Stop loading
   };
 
   const fetchViolations = async () => {
-    setLoading(true);
+    setLoadingViolations(true); // Start loading
     setError("");
     try {
       const response = await axios.get("https://localhost:7096/api/violations");
@@ -96,11 +89,23 @@ const FileManagement = () => {
     } catch (err) {
       setError("Failed to fetch violations.");
     }
-    setLoading(false);
+    setLoadingViolations(false); // Stop loading
+  };
+
+  const fetchCourses = async () => {
+    setLoadingCourses(true); // Start loading
+    setError("");
+    try {
+      const response = await axios.get("https://localhost:7096/api/courses");
+      setCourses(response.data);
+    } catch (err) {
+      setError("Failed to fetch courses.");
+    }
+    setLoadingCourses(false); // Stop loading
   };
 
   const fetchAccounts = async () => {
-    setLoading(true);
+    setLoadingAccounts(true); // Start loading
     setError("");
     try {
       const response = await axios.get("https://localhost:7096/api/auth/all");
@@ -108,11 +113,11 @@ const FileManagement = () => {
     } catch (err) {
       setError("Failed to fetch accounts.");
     }
-    setLoading(false);
+    setLoadingAccounts(false); // Stop loading
   };
 
   const fetchSemesters = async () => {
-    setLoading(true);
+    setLoadingSemesters(true); // Start loading
     setError("");
     try {
       const response = await axios.get("https://localhost:7096/api/semesters");
@@ -121,7 +126,7 @@ const FileManagement = () => {
     } catch (err) {
       setError("Failed to fetch semesters.");
     }
-    setLoading(false);
+    setLoadingSemesters(false); // Stop loading
   };
 
   const getCollegeName = (collegeId, role) => {
@@ -207,25 +212,15 @@ const FileManagement = () => {
 };
 
 const handleCreateOrUpdateSemester = async (semesterData) => {
-  setLoading(true);
+  setLoadingSemesters(true); // Start loading
   setError("");
 
   try {
-    // Convert dates to ISO 8601 format
-    const payload = {
-      ...semesterData,
-      startDate: new Date(semesterData.startDate).toISOString(),
-      endDate: new Date(semesterData.endDate).toISOString(),
-      id: semesterToEdit?.id || "", // Include the ID for updates (or empty string for new semesters)
-    };
-
-    console.log("Sending semesterData:", payload); // Log the payload
-
     if (semesterToEdit) {
       // Update existing semester
       const response = await api.put(
         `/semesters/${semesterToEdit.id}`,
-        payload
+        semesterData
       );
       setSemesters(
         semesters.map((semester) =>
@@ -235,10 +230,7 @@ const handleCreateOrUpdateSemester = async (semesterData) => {
       setSuccessMessage("Semester updated successfully!");
     } else {
       // Create new semester
-      const response = await api.post(
-        "/semesters",
-        payload
-      );
+      const response = await api.post("/semesters", semesterData);
       setSemesters([...semesters, response.data]);
       setSuccessMessage("Semester added successfully!");
     }
@@ -246,12 +238,11 @@ const handleCreateOrUpdateSemester = async (semesterData) => {
     setShowSemesterModal(false);
     setSemesterToEdit(null);
     setShowSuccessModal(true);
-    fetchSemesters();
   } catch (err) {
     console.error("Error:", err);
     setError(semesterToEdit ? "Failed to update semester." : "Failed to create semester.");
   }
-  setLoading(false);
+  setLoadingSemesters(false); // Stop loading
 };
 
 const handleEditSemester = (semester) => {
@@ -273,49 +264,49 @@ const handleEditSemester = (semester) => {
   };
 
   const handleCreateOrUpdateViolationType = async (violationData) => {
-    setLoading(true);
+    setLoadingViolations(true); // Start loading
     setError("");
-
+  
     try {
-        if (violationToEdit) {
-            // Update existing violation
-            const payload = {
-                id: violationToEdit.id,
-                ...violationData,
-            };
-
-            const response = await api.put(`/violations/${violationToEdit.id}`, payload);
-
-            setViolations(
-                violations.map((violation) =>
-                    violation.id === violationToEdit.id ? response.data : violation
-                )
-            );
-            setSuccessMessage("Violation updated successfully!");
-        } else {
-            // Create new violation
-            const response = await api.get("/violations");
-            const existingViolations = response.data;
-
-            // Generate a custom ID for the new violation
-            const newId = generateCustomId(existingViolations, "VIO");
-            const violationWithId = { ...violationData, id: newId };
-
-            const createResponse = await api.post("/violations", violationWithId);
-            setViolations([...violations, createResponse.data]);
-            setSuccessMessage("Violation added successfully!");
-        }
-
-        setShowViolationTypeModal(false);
-        setViolationToEdit(null);
-        setShowSuccessModal(true);
-        fetchViolations(); // Refresh the violations list
+      if (violationToEdit) {
+        // Update existing violation
+        const payload = {
+          id: violationToEdit.id,
+          ...violationData,
+        };
+  
+        const response = await api.put(`/violations/${violationToEdit.id}`, payload);
+  
+        setViolations(
+          violations.map((violation) =>
+            violation.id === violationToEdit.id ? response.data : violation
+          )
+        );
+        setSuccessMessage("Violation updated successfully!");
+      } else {
+        // Create new violation
+        const response = await api.get("/violations");
+        const existingViolations = response.data;
+  
+        // Generate a custom ID for the new violation
+        const newId = generateCustomId(existingViolations, "VIO");
+        const violationWithId = { ...violationData, id: newId };
+  
+        const createResponse = await api.post("/violations", violationWithId);
+        setViolations([...violations, createResponse.data]);
+        setSuccessMessage("Violation added successfully!");
+      }
+  
+      setShowViolationTypeModal(false);
+      setViolationToEdit(null);
+      setShowSuccessModal(true);
+      fetchViolations(); // Refresh the violations list
     } catch (err) {
-        console.error("Error:", err);
-        setError(violationToEdit ? "Failed to update violation." : "Failed to create violation.");
+      console.error("Error:", err);
+      setError(violationToEdit ? "Failed to update violation." : "Failed to create violation.");
     }
-    setLoading(false);
-};
+    setLoadingViolations(false); // Stop loading
+  };
 
   const handleEdit = (violation) => {
     setViolationToEdit(violation);
@@ -342,15 +333,17 @@ const handleEditSemester = (semester) => {
         case "account":
           endpoint = `/auth/delete/${id}`;
           break;
-        case "semester": // Add case for semesters
+        case "semester":
           endpoint = `/semesters/${id}`;
           break;
         default:
           throw new Error("Invalid item type");
       }
   
-      await axios.delete(`https://localhost:7096${endpoint}`);
+      // Use the `api` instance for the DELETE request
+      await api.delete(endpoint);
   
+      // Update the state based on the type
       switch (type) {
         case "college":
           setColleges(colleges.filter((college) => college.id !== id));
@@ -364,21 +357,29 @@ const handleEditSemester = (semester) => {
         case "account":
           setAccounts(accounts.filter((account) => account.username !== id));
           break;
-        case "semester": // Update state for semesters
+        case "semester":
           setSemesters(semesters.filter((semester) => semester.id !== id));
           break;
         default:
           break;
       }
   
+      // Reset the item to delete and show success message
       setItemToDelete({ id: null, type: null });
       setSuccessMessage(`${type} deleted successfully!`);
       setShowSuccessModal(true);
     } catch (err) {
       console.error("Error deleting item:", err);
-      setError(`Failed to delete ${type}. ${err.message}`);
+  
+      // Handle specific errors
+      if (err.response?.status === 404) {
+        setError(`${type} with ID ${id} not found.`);
+      } else {
+        setError(`Failed to delete ${type}. ${err.message}`);
+      }
+    } finally {
+      setLoading(false); // Stop loading regardless of success or failure
     }
-    setLoading(false);
   };
 
   const toggleDropdown = (id) => {
@@ -391,106 +392,106 @@ const handleEditSemester = (semester) => {
   };
 
   const handleCreateOrUpdateCollege = async (collegeData) => {
-    setLoading(true);
+    setLoadingColleges(true); // Start loading
     setError("");
-
+  
     try {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
-        const userName = localStorage.getItem("userName");
-
-        if (collegeToEdit) {
-            const payload = {
-                id: collegeToEdit.id,
-                ...collegeData,
-            };
-
-            const response = await api.put(
-                `/colleges/${collegeToEdit.id}`,
-                payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "User-Id": userId,
-                        "User-Name": userName,
-                    },
-                }
-            );
-
-            setColleges(
-                colleges.map((college) =>
-                    college.id === collegeToEdit.id ? response.data : college
-                )
-            );
-
-            setSuccessMessage("College updated successfully!");
-        } else {
-            const response = await api.get("/colleges");
-            const existingColleges = response.data;
-
-            const newId = generateCustomId(existingColleges, "COL");
-            const collegeWithId = { ...collegeData, id: newId };
-
-            const createResponse = await api.post(
-                "/colleges",
-                collegeWithId,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "User-Id": userId,
-                        "User-Name": userName,
-                    },
-                }
-            );
-
-            setColleges([...colleges, createResponse.data]);
-            setSuccessMessage("College added successfully!");
-        }
-
-        setShowCollegeModal(false);
-        setCollegeToEdit(null);
-        setShowSuccessModal(true);
-        fetchColleges();
-    } catch (err) {
-        console.error("Error:", err);
-        setError(collegeToEdit ? "Failed to update college." : "Failed to create college.");
-    }
-    setLoading(false);
-};
-
-const handleCreateOrUpdateCourse = async (courseData) => {
-  setLoading(true);
-  setError("");
-
-  try {
-      if (courseToEdit) {
-          // Update existing course
-          const response = await api.put(
-              `/courses/${courseToEdit.id}`,
-              courseData
-          );
-          setCourses(
-              courses.map((course) =>
-                  course.id === courseToEdit.id ? response.data : course
-              )
-          );
-          setSuccessMessage("Course updated successfully!");
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+      const userName = localStorage.getItem("userName");
+  
+      if (collegeToEdit) {
+        const payload = {
+          id: collegeToEdit.id,
+          ...collegeData,
+        };
+  
+        const response = await api.put(
+          `/colleges/${collegeToEdit.id}`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "User-Id": userId,
+              "User-Name": userName,
+            },
+          }
+        );
+  
+        setColleges(
+          colleges.map((college) =>
+            college.id === collegeToEdit.id ? response.data : college
+          )
+        );
+  
+        setSuccessMessage("College updated successfully!");
       } else {
-          // Create new course
-          const response = await api.post("/courses", courseData);
-          setCourses([...courses, response.data]);
-          setSuccessMessage("Course added successfully!");
+        const response = await api.get("/colleges");
+        const existingColleges = response.data;
+  
+        const newId = generateCustomId(existingColleges, "COL");
+        const collegeWithId = { ...collegeData, id: newId };
+  
+        const createResponse = await api.post(
+          "/colleges",
+          collegeWithId,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "User-Id": userId,
+              "User-Name": userName,
+            },
+          }
+        );
+  
+        setColleges([...colleges, createResponse.data]);
+        setSuccessMessage("College added successfully!");
       }
+  
+      setShowCollegeModal(false);
+      setCollegeToEdit(null);
+      setShowSuccessModal(true);
+      fetchColleges();
+    } catch (err) {
+      console.error("Error:", err);
+      setError(collegeToEdit ? "Failed to update college." : "Failed to create college.");
+    }
+    setLoadingColleges(false); // Stop loading
+  };
 
+  const handleCreateOrUpdateCourse = async (courseData) => {
+    setLoadingCourses(true); // Start loading
+    setError("");
+  
+    try {
+      if (courseToEdit) {
+        // Update existing course
+        const response = await api.put(
+          `/courses/${courseToEdit.id}`,
+          courseData
+        );
+        setCourses(
+          courses.map((course) =>
+            course.id === courseToEdit.id ? response.data : course
+          )
+        );
+        setSuccessMessage("Course updated successfully!");
+      } else {
+        // Create new course
+        const response = await api.post("/courses", courseData);
+        setCourses([...courses, response.data]);
+        setSuccessMessage("Course added successfully!");
+      }
+  
       setShowCourseModal(false);
       setCourseToEdit(null);
       setShowSuccessModal(true);
-  } catch (err) {
+    } catch (err) {
       console.error("Error:", err);
       setError(courseToEdit ? "Failed to update course." : "Failed to create course.");
-  }
-  setLoading(false);
-};
+    }
+    setLoadingCourses(false); // Stop loading
+  };
 
   return (
     <div className="file-management-container">
@@ -580,9 +581,13 @@ const handleCreateOrUpdateCourse = async (courseData) => {
   <div className="FM-table-container">
     <div className="FM-add-account-row">
       <h2>Course List</h2>
-      <button className="FM-add-button" onClick={() => setShowCourseModal(true)}>
-        Add Course
-      </button>
+      <button
+          className="FM-add-button"
+          onClick={() => setShowCourseModal(true)}
+          disabled={loadingCourses} // Disable button while loading
+        >
+          {loadingCourses ? "Loading..." : "Add Course"}
+        </button>
     </div>
 
     <label>Filter by College:</label>
@@ -677,8 +682,12 @@ const handleCreateOrUpdateCourse = async (courseData) => {
         <div className="FM-table-container">
           <div className="FM-add-account-row">
             <h2>Violations List</h2>
-            <button className="FM-add-button" onClick={() => setShowViolationTypeModal(true)}>
-              + Add Violation Type
+            <button
+              className="FM-add-button"
+              onClick={() => setShowViolationTypeModal(true)}
+              disabled={loadingViolations} // Disable button while loading
+            >
+              {loadingViolations ? "Loading..." : "+ Add Violation Type"}
             </button>
           </div>
 
@@ -771,8 +780,12 @@ const handleCreateOrUpdateCourse = async (courseData) => {
           <div className="FM-table-container">
             <div className="FM-add-account-row">
               <h2>Accounts List</h2>
-              <button className="FM-add-button" onClick={() => setIsModalOpen(true)}>
-                + Add Account
+              <button
+                className="FM-add-button"
+                onClick={() => setIsModalOpen(true)}
+                disabled={loadingAccounts} // Disable button while loading
+              >
+                {loadingAccounts ? "Loading..." : "+ Add Account"}
               </button>
             </div>
 

@@ -4,6 +4,7 @@ import api from "./axiosInstance";
 
 const CreateAccountForm = ({ colleges, onCreateAccount, setError, setLoading, setShowOverlay }) => {
   
+  const [loadingAccounts, setLoadingAccounts] = useState(false);
   const [newAccount, setNewAccount] = useState({
     username: "",
     name: "",
@@ -14,6 +15,7 @@ const CreateAccountForm = ({ colleges, onCreateAccount, setError, setLoading, se
   });
 
   const handleCreateAccount = async (e) => {
+    setLoadingAccounts(true);
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -52,7 +54,7 @@ const CreateAccountForm = ({ colleges, onCreateAccount, setError, setLoading, se
         console.error("Error creating account:", err.response?.data || err.message);
         setError("Failed to create account.");
     }
-    setLoading(false);
+    setLoadingAccounts(false);
 };
   
 
