@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/VfPexRmz92HSKYwee8XGu2piA86Ik1R8EbJh71dir8fzebL0F4lCj4VKP0Um3b9k3Dq7d2KcUEVNBC/HoJUiA==",
+  "dgSpecHash": "DT+6mcfOnDHw0vW8saFg4h0dbeHp+C7vO3y3Smv8hBEwe60r7Qe/bXbb6RuGD8xO7z/B4t9t5bIkVOGxmbk1UQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\My Pc\\.nuget\\packages\\mongodb.libmongocrypt\\1.8.2\\mongodb.libmongocrypt.1.8.2.nupkg.sha512",
     "C:\\Users\\My Pc\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\My Pc\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\My Pc\\.nuget\\packages\\restsharp\\112.1.0\\restsharp.112.1.0.nupkg.sha512",
     "C:\\Users\\My Pc\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
     "C:\\Users\\My Pc\\.nuget\\packages\\snappier\\1.0.0\\snappier.1.0.0.nupkg.sha512",
     "C:\\Users\\My Pc\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",

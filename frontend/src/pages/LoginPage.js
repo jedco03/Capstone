@@ -1,18 +1,16 @@
 import React from 'react';
-import LoginForm from '../components/loginForm'; 
+import LoginForm from '../components/loginForm.js'; 
 
-function LoginPage({ setIsAuthenticated }) {
-    return (
-        <div className="LoginPage">
-            <div className='loginFormContainer'>
-                <div className='loginPage'>
-                    <form className="loginForm">
-                    <LoginForm setIsAuthenticated={setIsAuthenticated} /> 
-                    </form>
-                </div>
-            </div>
+function LoginPage() {
+  return (
+    <div className="LoginPage">
+      <div className="loginFormContainer">
+        <div className="loginPage">
+          <LoginForm /> 
         </div>
-    );
-  } 
+      </div>
+    </div>
+  );
+}
 
 export default LoginPage;

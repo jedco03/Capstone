@@ -96,7 +96,8 @@ const AuditTrailTable = () => {
                     columns={columns}
                     dataSource={auditTrails}
                     rowKey="id"
-                    pagination={{ pageSize: 10 }}
+                    pagination={{ pageSize: 6
+                     }}
                 />
             )}
         </div>

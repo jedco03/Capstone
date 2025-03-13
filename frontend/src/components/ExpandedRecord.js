@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Table, Select, Input, Modal, Dropdown, Menu, notification, Descriptions, Typography, Card } from 'antd';
 import { Row, Col } from 'antd';
+import ViolationDetailsModal from './ViolationDetailsModal';
 import Sidebar from './Sidebar';
 import '../styles/dashStyles.css';
 import '../styles/expandedRecordsStyles.css';
@@ -13,6 +14,10 @@ function ExpandedRecord() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showAddSanctionModal, setShowAddSanctionModal] = useState(false);
+  const [sanctionInput, setSanctionInput] = useState("");
+  const [proofInput, setProofInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [newViolation, setNewViolation] = useState({
     violationId: '',
     remarks: '',
@@ -132,18 +137,29 @@ function ExpandedRecord() {
       alert('Please fill in all required fields.');
       return;
     }
-
+  
+    setIsSubmitting(true); // Disable the submit button
+  
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         alert('You are not authenticated. Please log in.');
         return;
       }
-
-      await api.post(`/records/addViolation/${studentId}`, newViolation, {
+  
+      // Add the violation without Sanction and Proof
+      const violationData = {
+        ...newViolation,
+        sanction: "Pending Decision",
+        proof: "", 
+        isSanctioned: false, 
+      };
+  
+      await api.post(`/records/addViolation/${studentId}`, violationData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
+      // Reset the form
       setNewViolation({
         violationId: '',
         remarks: '',
@@ -151,42 +167,56 @@ function ExpandedRecord() {
         status: 'Pending',
         acknowledged: false,
         IsIDInPossession: false,
+        sanction: '', 
+        proof: '',
+        isSanctioned: false, 
       });
       setShowOverlay(false);
       await fetchData();
     } catch (error) {
       console.error('Error adding violation:', error);
       alert('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false); // Re-enable the submit button
     }
   };
 
   const handleMarkAsResolved = async () => {
     if (!selectedViolationId) return;
-
+  
     const selectedViolation = studentData.violations.find(
       (violation) => violation.recordId === selectedViolationId
     );
-
+  
     if (!selectedViolation.acknowledged) {
       alert('Please acknowledge the violation before marking it as resolved.');
       return;
     }
-
+  
+    setIsSubmitting(true); // Disable the submit button
+  
     try {
-      await api.put(`/records/markAsResolved/${selectedViolationId}`);
+      await api.put(`/records/markAsResolved/${selectedViolationId}`, {
+        proof: proofInput, // Include the proof in the request
+      });
+  
       setStudentData((prevData) => ({
         ...prevData,
         violations: prevData.violations.map((violation) =>
           violation.recordId === selectedViolationId
-            ? { ...violation, status: 'Resolved' }
+            ? { ...violation, status: 'Resolved', proof: proofInput }
             : violation
         ),
       }));
+  
       setShowResolveOverlay(false);
+      setProofInput(""); // Clear the proof input
       await fetchData();
     } catch (error) {
       console.error('Error marking as resolved:', error);
       alert('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false); // Re-enable the submit button
     }
   };
 
@@ -242,18 +272,53 @@ function ExpandedRecord() {
 
   const actionsMenu = (record) => (
     <Menu>
-      <Menu.Item key="markAsResolved" onClick={() => {
-        setSelectedViolationId(record.recordId);
-        setShowResolveOverlay(true);
-      }}>
-        Mark as Resolved
-      </Menu.Item>
-      <Menu.Item key="update" onClick={() => {
-        setSelectedViolationId(record.recordId);
-        handleUpdateViolation();
-      }}>
-        View Details
-      </Menu.Item>
+      {record.status === 'Resolved' && record.acknowledged ? (
+        // Only show "View Details" if resolved and acknowledged
+        <Menu.Item
+          key="update"
+          onClick={() => {
+            setSelectedViolationId(record.recordId);
+            handleUpdateViolation();
+          }}
+        >
+          View Details
+        </Menu.Item>
+      ) : (
+        // Show all actions if not resolved or not acknowledged
+        <>
+          {!record.isSanctioned && (
+            <Menu.Item
+              key="addSanction"
+              onClick={() => {
+                setSelectedViolationId(record.recordId);
+                setShowAddSanctionModal(true); // Show the Add Sanction modal
+              }}
+            >
+              Add Sanction
+            </Menu.Item>
+          )}
+          {record.isSanctioned && (
+            <Menu.Item
+              key="markAsResolved"
+              onClick={() => {
+                setSelectedViolationId(record.recordId);
+                setShowResolveOverlay(true);
+              }}
+            >
+              Mark as Resolved
+            </Menu.Item>
+          )}
+          <Menu.Item
+            key="update"
+            onClick={() => {
+              setSelectedViolationId(record.recordId);
+              handleUpdateViolation();
+            }}
+          >
+            View Details
+          </Menu.Item>
+        </>
+      )}
     </Menu>
   );
 
@@ -302,12 +367,11 @@ function ExpandedRecord() {
     {
       title: 'Actions',
       key: 'actions',
-      render: (text, record) =>
-        record.status !== 'Resolved' && (
-          <Dropdown overlay={actionsMenu(record)} trigger={['click']}>
-            <Button type="link">⋮</Button>
-          </Dropdown>
-        ),
+      render: (text, record) => (
+        <Dropdown overlay={actionsMenu(record)} trigger={['click']}>
+          <Button type="link">⋮</Button>
+        </Dropdown>
+      ),
     },
   ];
 
@@ -370,7 +434,7 @@ function ExpandedRecord() {
                 <Button key="cancel" onClick={() => setShowOverlay(false)}>
                   Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleAddViolation}>
+                <Button key="submit" type="primary" onClick={handleAddViolation} loading={isSubmitting} disabled={isSubmitting}>
                   Submit
                 </Button>,
               ]}
@@ -415,69 +479,38 @@ function ExpandedRecord() {
             <Modal
               title="Confirm Resolution"
               visible={showResolveOverlay}
-              onCancel={() => setShowResolveOverlay(false)}
+              onCancel={() => {
+                setShowResolveOverlay(false);
+                setProofInput(""); // Clear the proof input when the modal is closed
+              }}
               footer={[
-                <Button key="cancel" onClick={() => setShowResolveOverlay(false)}>
+                <Button key="cancel" onClick={() => {
+                  setShowResolveOverlay(false);
+                  setProofInput(""); // Clear the proof input when canceled
+                }}>
                   Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleMarkAsResolved}>
+                <Button key="submit" type="primary" onClick={handleMarkAsResolved} loading={isSubmitting} disabled={isSubmitting}>
                   Mark as Resolved
                 </Button>,
               ]}
             >
               <p>Are you sure you want to mark this violation as resolved? This action cannot be undone.</p>
+              <Form.Item label="Proof (e.g., Drive Link)">
+                <Input.TextArea
+                  placeholder="Enter proof (e.g., Google Drive link)"
+                  value={proofInput}
+                  onChange={(e) => setProofInput(e.target.value)}
+                  rows={4}
+                />
+              </Form.Item>
             </Modal>
 
-            <Modal
-              title="Violation Details"
+            <ViolationDetailsModal
               visible={showUpdateOverlay}
               onCancel={() => setShowUpdateOverlay(false)}
-              footer={[
-                <Button key="cancel" onClick={() => setShowUpdateOverlay(false)}>
-                  Close
-                </Button>,
-              ]}
-              width={800} // Adjust the width as needed
-            >
-              {selectedViolationDetails ? (
-                <Card>
-                  <Descriptions
-                    bordered
-                    column={1} // Display details in a single column
-                    size="middle"
-                    labelStyle={{ fontWeight: 'bold', width: '30%' }} // Style for labels
-                    contentStyle={{ backgroundColor: '#fafafa' }} // Style for content
-                  >
-                    <Descriptions.Item label="Violation">
-                      <Text>{selectedViolationDetails.violationId}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Type">
-                      <Text>{selectedViolationDetails.type}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Remarks">
-                      <Text>{selectedViolationDetails.remarks}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Date">
-                      <Text>{new Date(selectedViolationDetails.date).toLocaleString()}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Status">
-                      <Text>{selectedViolationDetails.status}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Acknowledged">
-                      <Text>{selectedViolationDetails.acknowledged ? 'Yes' : 'No'}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="ID in Possession">
-                      <Text>{selectedViolationDetails.IsIDInPossession ? 'Yes' : 'No'}</Text>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Guard Name">
-                      <Text>{selectedViolationDetails.guardName}</Text>
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              ) : (
-                <p>Loading violation details...</p>
-              )}
-            </Modal>
+              selectedViolationDetails={selectedViolationDetails}
+            />
 
             <Modal
               title="Edit Student Record"
@@ -582,6 +615,76 @@ function ExpandedRecord() {
                   </Col>
                 </Row>
               </Form>
+            </Modal>
+
+            <Modal
+              title="Add Sanction"
+              visible={showAddSanctionModal}
+              onCancel={() => {
+                setShowAddSanctionModal(false);
+                setSanctionInput(""); 
+              }}
+              footer={[
+                <Button
+                  key="cancel"
+                  onClick={() => {
+                    setShowAddSanctionModal(false);
+                    setSanctionInput(""); 
+                  }}
+                >
+                  Cancel
+                </Button>,
+                <Button
+                  key="submit"
+                  type="primary"
+                  onClick={async () => {
+                    if (!sanctionInput) {
+                      alert("Please enter a sanction.");
+                      return;
+                    }
+
+                    try {
+                      const token = localStorage.getItem("token");
+                      if (!token) {
+                        alert("You are not authenticated. Please log in.");
+                        return;
+                      }
+
+                      // Update the violation with the sanction and set isSanctioned to true
+                      await api.put(
+                        `/records/addSanction/${selectedViolationId}`,
+                        { sanction: sanctionInput, isSanctioned: true },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                      );
+
+                      // Refresh the data
+                      await fetchData();
+
+                      // Close the modal and clear the input
+                      setShowAddSanctionModal(false);
+                      setSanctionInput("");
+
+                      notification.success({
+                        message: "Sanction Added Successfully",
+                        description: "The sanction has been added to the violation.",
+                        placement: "topRight",
+                      });
+                    } catch (error) {
+                      console.error("Error adding sanction:", error);
+                      alert("An error occurred. Please try again.");
+                    }
+                  }}
+                >
+                  Submit
+                </Button>,
+              ]}
+            >
+              <Input.TextArea
+                placeholder="Enter sanction details"
+                value={sanctionInput}
+                onChange={(e) => setSanctionInput(e.target.value)}
+                rows={4}
+              />
             </Modal>
           </div>
         )}

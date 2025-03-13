@@ -3,36 +3,92 @@
   "WorkspaceRootPath": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\brevoemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\brevoemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\recordscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\recordscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\models\\audittrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\audittrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\audittrailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\audittrailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\audittrailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\audittrailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\models\\audittrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\audittrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\collegeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\collegeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\violationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\violationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\violationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\violationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\collegecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\collegecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\studentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\studentservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\violationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\violationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\models\\college.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\college.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\semesterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\semesterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\semestercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\semestercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\models\\semester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\semester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,34 +97,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\yearservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\yearservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\collegeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\collegeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\collegecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\collegecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\audittrailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\audittrailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|c:\\users\\my pc\\desktop\\files\\capstone\\backend\\webapi\\webapi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9F802D80-99E4-410A-B7B0-D879D0E84700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,37 +106,141 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ViolationService.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\ViolationService.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Services\\ViolationService.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\ViolationService.cs",
-              "RelativeToolTip": "WebAPI\\Services\\ViolationService.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAowAAAAAAAAAAA",
+              "DocumentIndex": 5,
+              "Title": "RecordsController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\RecordsController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\RecordsController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\RecordsController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\RecordsController.cs",
+              "ViewState": "AQIAAJgAAAAAAAAAAAAqwLkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T09:57:12.214Z",
+              "WhenOpened": "2025-03-07T10:35:41.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAwEEAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T11:07:25.525Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "CourseService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CourseService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\CourseService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CourseService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\CourseService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T08:14:44.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\CourseController.cs",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAiwKYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T10:33:05.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "AuditTrailService.cs",
               "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\AuditTrailService.cs",
               "RelativeDocumentMoniker": "WebAPI\\Services\\AuditTrailService.cs",
               "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\AuditTrailService.cs",
               "RelativeToolTip": "WebAPI\\Services\\AuditTrailService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACoAAAABAAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAYwCoAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T11:49:01.662Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
+              "Title": "AuditTrailController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuditTrailController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AuditTrailController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuditTrailController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\AuditTrailController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T11:49:06.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CollegeService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CollegeService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\CollegeService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CollegeService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\CollegeService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T08:14:40.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ViolationService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\ViolationService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\ViolationService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\ViolationService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\ViolationService.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAA5wA4AAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T09:57:12.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BrevoEmailService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\BrevoEmailService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\BrevoEmailService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\BrevoEmailService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\BrevoEmailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T09:30:22.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Program.cs*",
+              "RelativeToolTip": "WebAPI\\Program.cs*",
+              "ViewState": "AQIAACcAAAAAAAAAAAAAADoAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T11:28:40.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "AuditTrail.cs",
               "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\AuditTrail.cs",
               "RelativeDocumentMoniker": "WebAPI\\Models\\AuditTrail.cs",
@@ -121,65 +253,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Program.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Program.cs",
-              "RelativeToolTip": "WebAPI\\Program.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAEwG8AAAAAAAAA",
+              "DocumentIndex": 12,
+              "Title": "CollegeController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CollegeController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\CollegeController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CollegeController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\CollegeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAKMAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T11:28:40.918Z",
+              "WhenOpened": "2025-03-07T10:02:56.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "WebAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\appsettings.json",
+              "RelativeToolTip": "WebAPI\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-09T08:20:25.99Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "WebAPI\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAAUBAAAAAAAAAAAwwN8AAAAhAAAA",
+              "Title": "StudentServices.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\StudentServices.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\StudentServices.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\StudentServices.cs",
+              "RelativeToolTip": "WebAPI\\Services\\StudentServices.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAowGkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T11:07:25.525Z",
+              "WhenOpened": "2025-03-09T12:57:02.435Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "RecordsController.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\RecordsController.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Controllers\\RecordsController.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\RecordsController.cs",
-              "RelativeToolTip": "WebAPI\\Controllers\\RecordsController.cs",
-              "ViewState": "AQIAAOQBAAAAAAAAAAAUwO0BAABFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T10:35:41.427Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Student.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Student.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Models\\Student.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Student.cs",
-              "RelativeToolTip": "WebAPI\\Models\\Student.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAA2wEsAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T07:22:59.905Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
               "Title": "ViolationController.cs",
               "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\ViolationController.cs",
               "RelativeDocumentMoniker": "WebAPI\\Controllers\\ViolationController.cs",
               "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\ViolationController.cs",
               "RelativeToolTip": "WebAPI\\Controllers\\ViolationController.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAgwJwAAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE4AAABfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T10:57:36.268Z",
               "EditorCaption": ""
@@ -187,31 +306,94 @@
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "AuditTrailController.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuditTrailController.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AuditTrailController.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\AuditTrailController.cs",
-              "RelativeToolTip": "WebAPI\\Controllers\\AuditTrailController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAtAAAA",
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\AuthService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\AuthService.cs",
+              "ViewState": "AQIAAEYAAAAAAAAAAAAcwGcAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T11:49:06.372Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "StudentServices.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\StudentServices.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Services\\StudentServices.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\StudentServices.cs",
-              "RelativeToolTip": "WebAPI\\Services\\StudentServices.cs",
-              "ViewState": "AQIAAIEAAAAAAAAAAAAkwKsAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-09T12:57:02.435Z",
+              "WhenOpened": "2025-03-13T11:16:35.791Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 16,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\Student.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Student.cs",
+              "RelativeToolTip": "WebAPI\\Models\\Student.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T07:22:59.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "College.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\College.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\College.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\College.cs",
+              "RelativeToolTip": "WebAPI\\Models\\College.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T15:13:58.721Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\ReportsController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\ReportsController.cs",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAAwHYAAABdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T17:29:05.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SemesterService.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\SemesterService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\SemesterService.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\SemesterService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\SemesterService.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAYwD0AAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T15:17:40.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SemesterController.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\SemesterController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\SemesterController.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\SemesterController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\SemesterController.cs",
+              "ViewState": "AQIAAFkAAAAAAAAAAADwv4QAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T15:18:09.894Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Semester.cs",
+              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Semester.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\Semester.cs",
+              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Models\\Semester.cs",
+              "RelativeToolTip": "WebAPI\\Models\\Semester.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T15:17:09.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
               "Title": "StudentDto.cs",
               "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Dtos\\StudentDto.cs",
               "RelativeDocumentMoniker": "WebAPI\\Dtos\\StudentDto.cs",
@@ -219,38 +401,11 @@
               "RelativeToolTip": "WebAPI\\Dtos\\StudentDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T07:27:14.403Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T07:27:14.403Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CollegeService.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CollegeService.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Services\\CollegeService.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CollegeService.cs",
-              "RelativeToolTip": "WebAPI\\Services\\CollegeService.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAQwC4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T08:14:40.007Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CourseService.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CourseService.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Services\\CourseService.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\CourseService.cs",
-              "RelativeToolTip": "WebAPI\\Services\\CourseService.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAowDMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T08:14:44.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 23,
               "Title": "YearService.cs",
               "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Services\\YearService.cs",
               "RelativeDocumentMoniker": "WebAPI\\Services\\YearService.cs",
@@ -258,45 +413,7 @@
               "RelativeToolTip": "WebAPI\\Services\\YearService.cs",
               "ViewState": "AQIAAAQAAAAAAAAAAAAkwBUAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T08:14:47.324Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CollegeController.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CollegeController.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Controllers\\CollegeController.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CollegeController.cs",
-              "RelativeToolTip": "WebAPI\\Controllers\\CollegeController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADIAAABKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T10:02:56.617Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\appsettings.json",
-              "RelativeDocumentMoniker": "WebAPI\\appsettings.json",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\appsettings.json",
-              "RelativeToolTip": "WebAPI\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-09T08:20:25.99Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CourseController.cs",
-              "DocumentMoniker": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CourseController.cs",
-              "RelativeDocumentMoniker": "WebAPI\\Controllers\\CourseController.cs",
-              "ToolTip": "C:\\Users\\My Pc\\Desktop\\Files\\Capstone\\backend\\WebAPI\\WebAPI\\Controllers\\CourseController.cs",
-              "RelativeToolTip": "WebAPI\\Controllers\\CourseController.cs",
-              "ViewState": "AQIAAHsAAAAAAAAAAAAiwKYAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T10:33:05.468Z"
+              "WhenOpened": "2025-03-10T08:14:47.324Z"
             }
           ]
         }

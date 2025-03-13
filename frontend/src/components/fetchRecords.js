@@ -187,12 +187,7 @@ function FetchRecords({ apiEndpoint, collegesApiEndpoint, onExpand }) {
           <Table
             columns={columns}
             dataSource={tableData}
-            pagination={{
-              current: currentPage,
-              pageSize: recordsPerPage,
-              total: tableData.length,
-              onChange: handlePageChange,
-            }}
+            pagination={{ pageSize: 8 }}
             rowKey="id"
             loading={isLoading}
             locale={{ emptyText: "No matching records found" }}

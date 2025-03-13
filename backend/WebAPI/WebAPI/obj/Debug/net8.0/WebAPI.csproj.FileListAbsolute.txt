@@ -231,3 +231,4 @@ C:\Users\My Pc\Desktop\Files\Capstone\backend\WebAPI\WebAPI\bin\Debug\net8.0\Mic
 C:\Users\My Pc\Desktop\Files\Capstone\backend\WebAPI\WebAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\My Pc\Desktop\Files\Capstone\backend\WebAPI\WebAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\My Pc\Desktop\Files\Capstone\backend\WebAPI\WebAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\My Pc\Desktop\Files\Capstone\backend\WebAPI\WebAPI\bin\Debug\net8.0\RestSharp.dll

@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System;
 using Newtonsoft.Json.Linq;
 using WebAPI.Dtos;
+using Microsoft.Extensions.Options;
+using WebAPI.Data;
 
 
 namespace WebAPI.Controllers
@@ -21,7 +23,18 @@ namespace WebAPI.Controllers
         private readonly CollegeService _collegeService;
         private readonly CourseService _courseService;
         private readonly YearService _yearService;
-        public RecordsController(StudentServices studentServices, IHttpContextAccessor httpContextAccessor, AuditTrailService auditTrailService, CollegeService collegeservice, CourseService courseservice, YearService yearservice)
+        private readonly ViolationService _violationService;
+        private readonly AuthService _authService;
+        private readonly IMongoCollection<College> _collegeCollection;
+        public RecordsController(StudentServices studentServices, 
+            IHttpContextAccessor httpContextAccessor, 
+            AuditTrailService auditTrailService, 
+            CollegeService collegeservice, 
+            CourseService courseservice, 
+            YearService yearservice, 
+            ViolationService violationService, 
+            AuthService authService,
+            IOptions<DatabaseSettings> settings)
         {
             _studentServices = studentServices;
             _httpContextAccessor = httpContextAccessor;
@@ -29,6 +42,11 @@ namespace WebAPI.Controllers
             _collegeService = collegeservice;
             _courseService = courseservice;
             _yearService = yearservice;
+            _violationService = violationService;
+            _authService = authService;
+            var mongoClient = new MongoClient(settings.Value.Connection);
+            var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
+            _collegeCollection = mongoDb.GetCollection<College>("collegeColl");
         }
 
         // GET: api/records
@@ -151,13 +169,9 @@ namespace WebAPI.Controllers
             {
                 // Extract user information from the token
                 var user = _httpContextAccessor.HttpContext.User;
-                var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value; // ✅ Extract User ID
-                var userFullName = user.FindFirst("fullName")?.Value; // ✅ Extract Full Name (instead of username)
-                var userName = user.FindFirst(ClaimTypes.Name)?.Value; // Extract username from token
-
-                Console.WriteLine($"[LOG] Extracted User Details:");
-                Console.WriteLine($"  - User ID: {userId}");
-                Console.WriteLine($"  - User Name: {userFullName}");
+                var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userFullName = user.FindFirst("fullName")?.Value;
+                var userName = user.FindFirst(ClaimTypes.Name)?.Value;
 
                 if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userName))
                 {
@@ -174,12 +188,88 @@ namespace WebAPI.Controllers
                 await _auditTrailService.LogActionAsync(
                     "Add Violation", // Action
                     userId, // User ID
-                    userFullName, //user full name
-                    newViolation.RecordId, //record id
-                    studno, //student number
-                    $"Added a new violation for student {studno} by {userFullName}." // Description
+                    userFullName, // User full name
+                    newViolation.RecordId, // Record ID
+                    studno, // Student number
+                    $"Added a new violation for student {studno} by {userFullName}."
                 );
-                
+
+                // Fetch the student details
+                var student = await _studentServices.GetAsync(studno);
+                if (student != null && !string.IsNullOrEmpty(student.Email))
+                {
+                    // Fetch the violation details using the Violation ID
+                    var violationDetails = await _violationService.GetViolationByIdAsync(newViolation.ViolationId);
+
+                    if (violationDetails == null)
+                    {
+                        throw new Exception($"Violation details not found for ID: {newViolation.ViolationId}");
+                    }
+
+                    // Fetch the college ID separately
+                    var college = await _collegeCollection.Find(c => c.Name == student.CollegeId).FirstOrDefaultAsync();
+                    var collegeId = college?.Id; // This is the college ID (e.g., "COL_1")
+
+                    if (string.IsNullOrEmpty(collegeId))
+                    {
+                        throw new Exception($"College ID not found for college name: {student.CollegeId}");
+                    }
+
+                    // Send email notification to the student
+                    var emailService = new BrevoEmailService(
+                        apiKey: "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",
+                        senderEmail: "jedco04@gmail.com",
+                        senderName: "Your School Administration"
+                    );
+
+                    var studentSubject = "New Violation Recorded";
+                    var studentBody = $"Dear {student.FirstName},<br/><br/>" +
+                                      $"A new violation has been recorded for you:<br/><br/>" +
+                                      $"<b>Violation Details:</b><br/>" +
+                                      $"Violation: {violationDetails.Name}<br/>" +
+                                      $"Type: {violationDetails.Type}<br/>" +
+                                      $"Remarks: {newViolation.Remarks}<br/>" +
+                                      $"Guard Name: {newViolation.guardName}<br/>" +
+                                      $"Status: {newViolation.Status}<br/><br/>" +
+                                      $"<b>Student Details:</b><br/>" +
+                                      $"College: {student.CollegeId}<br/>" + // Use the mapped college name
+                                      $"Course: {student.CourseId}<br/><br/>" +
+                                      $"Please contact the administration for further details.<br/><br/>" +
+                                      $"Best regards,<br/>Your School Administration";
+
+                    await emailService.SendEmailAsync(student.Email, student.FirstName, studentSubject, studentBody);
+
+                    // Fetch the dean's email based on the college ID
+                    var dean = await _authService.GetDeanByCollegeIdAsync(collegeId);
+
+                    if (dean != null && !string.IsNullOrEmpty(dean.Email))
+                    {
+                        // Send email notification to the dean
+                        var deanSubject = "New Violation Recorded for Student";
+                        var deanBody = $"Dear {dean.Name},<br/><br/>" +
+                                       $"A new violation has been recorded for the following student:<br/><br/>" +
+                                       $"<b>Student Details:</b><br/>" +
+                                       $"Name: {student.FirstName} {student.LastName}<br/>" +
+                                       $"Student Number: {student.StudentNumber}<br/>" +
+                                       $"College: {student.CollegeId}<br/>" + // Use the mapped college name
+                                       $"Course: {student.CourseId}<br/><br/>" +
+                                       $"<b>Violation Details:</b><br/>" +
+                                       $"Violation: {violationDetails.Name}<br/>" +
+                                       $"Type: {violationDetails.Type}<br/>" +
+                                       $"Remarks: {newViolation.Remarks}<br/>" +
+                                       $"Guard Name: {newViolation.guardName}<br/>" +
+                                       $"Status: {newViolation.Status}<br/><br/>" +
+                                       $"Please review the violation and take appropriate action.<br/><br/>" +
+                                       $"Best regards,<br/>Your School Administration";
+
+                        await emailService.SendEmailAsync(dean.Email, dean.Name, deanSubject, deanBody);
+                    }
+                    else
+                    {
+                        Console.WriteLine("[WARNING] Dean not found for college ID: {0}", collegeId);
+                    }
+                }
+
                 return Ok("Violation added successfully");
             }
             catch (MongoException ex)
@@ -203,35 +293,35 @@ namespace WebAPI.Controllers
             {
                 Console.WriteLine("Student Number: " + studno);
 
-                // ✅ Fetch the student record using the student number
+                // Fetch the student record using the student number
                 Student student = await _studentServices.GetAsync(studno);
                 if (student == null)
                 {
                     return NotFound($"There is no Record with this Student Number: {studno}");
                 }
 
-                // ✅ Fetch the College by _id
+                // Fetch the College by _id
                 var college = await _collegeService.GetCollegeByIdAsync(updateStudentDto.College);
                 if (college == null)
                 {
                     return BadRequest("Invalid College selected.");
                 }
 
-                // ✅ Fetch the Course by _id
+                // Fetch the Course by _id
                 var course = await _courseService.GetCourseByIdAsync(updateStudentDto.Course);
                 if (course == null)
                 {
                     return BadRequest("Invalid Course selected.");
                 }
 
-                // ✅ Fetch the Year by _id
+                // Fetch the Year by _id
                 var year = await _yearService.GetYearByIdAsync(updateStudentDto.Year);
                 if (year == null)
                 {
                     return BadRequest("Invalid Year selected.");
                 }
 
-                // ✅ Map the fields
+                // Map the fields
                 student.StudentNumber = updateStudentDto.StudentNumber;
                 student.Email = updateStudentDto.Email;
                 student.FirstName = updateStudentDto.FirstName;
@@ -244,10 +334,10 @@ namespace WebAPI.Controllers
                 student.PhoneNumber = updateStudentDto.PhoneNumber;
                 student.Guardian = updateStudentDto.Guardian;
 
-                // ✅ Use the new method
+                // Use the new method
                 await _studentServices.UpdateByStudentNumberAsync(studno, student);
 
-                // ✅ Log the update
+                // Log the update
                 var user = _httpContextAccessor.HttpContext.User;
                 var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 var userFullName = user.FindFirst("fullName")?.Value;
@@ -353,7 +443,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPut("markAsResolved/{violationId}")]
-        public async Task<IActionResult> MarkAsResolved(string violationId)
+        public async Task<IActionResult> MarkAsResolved(string violationId, [FromBody] MarkAsResolvedRequest request)
         {
             try
             {
@@ -373,11 +463,34 @@ namespace WebAPI.Controllers
                 }
 
                 // Mark the violation as resolved and get the student number
-                var (success, studno) = await _studentServices.MarkViolationAsResolvedAsync(violationId);
+                var (success, studno) = await _studentServices.MarkViolationAsResolvedAsync(violationId, request.Proof);
 
                 if (!success)
                 {
                     return NotFound("Violation not found.");
+                }
+
+                // Fetch the student details
+                var student = await _studentServices.GetAsync(studno);
+                if (student != null && !string.IsNullOrEmpty(student.Email))
+                {
+                    // Send email notification to the student
+                    var emailService = new BrevoEmailService(
+                        apiKey: "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",
+                        senderEmail: "jedco04@gmail.com",
+                        senderName: "Your School Administration"
+                    );
+
+                    var subject = "Violation Resolved";
+                    var body = $"Dear {student.FirstName},<br/><br/>" +
+                               $"Your violation has been marked as resolved:<br/><br/>" +
+                               $"<b>Violation Details:</b><br/>" +
+                               $"Violation ID: {violationId}<br/>" +
+                               $"Proof Submitted: {request.Proof}<br/><br/>" +
+                               $"If you have any questions, please contact the administration.<br/><br/>" +
+                               $"Best regards,<br/>Your School Administration";
+
+                    await emailService.SendEmailAsync(student.Email, student.FirstName, subject, body);
                 }
 
                 // Log the action to the audit trail
@@ -387,7 +500,7 @@ namespace WebAPI.Controllers
                     userFullName, // User Full Name
                     violationId, // Violation ID (record ID)
                     studno, // Student Number
-                    $"Marked violation {violationId} as resolved by {userFullName}." // Description
+                    $"Marked violation {violationId} as resolved by {userFullName}. Proof: {request.Proof}" // Description
                 );
 
                 return Ok("Violation marked as resolved successfully");
@@ -404,6 +517,11 @@ namespace WebAPI.Controllers
                 Console.WriteLine("General Error: {0}", ex.Message);
                 return StatusCode(500, "Internal server error"); // 500 for general server errors
             }
+        }
+
+        public class MarkAsResolvedRequest
+        {
+            public string Proof { get; set; } // Add this property for the proof field
         }
 
         [HttpPost("bulkApprove")]
@@ -517,6 +635,58 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpPut("addSanction/{recordId}")]
+        public async Task<IActionResult> AddSanction(string recordId, [FromBody] AddSanctionRequest request)
+        {
+            try
+            {
+                // Extract user information from the token
+                var user = _httpContextAccessor.HttpContext.User;
+                var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userFullName = user.FindFirst("fullName")?.Value;
+
+                if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userFullName))
+                {
+                    return Unauthorized("Invalid user credentials.");
+                }
+
+                // Use the StudentServices to add the sanction
+                var success = await _studentServices.AddSanctionAsync(recordId, request.Sanction);
+
+                if (!success)
+                {
+                    return NotFound("Violation not found.");
+                }
+
+                // Log the action to the audit trail
+                await _auditTrailService.LogActionAsync(
+                    "Add Sanction", // Action
+                    userId, // User ID
+                    userFullName, // User Full Name
+                    recordId, // Violation ID (record ID)
+                    "Violations", // Student number (not applicable here)
+                    $"Added a sanction to violation {recordId} by {userFullName}." // Description
+                );
+
+                return Ok("Sanction added successfully.");
+            }
+            catch (MongoException ex)
+            {
+                Console.WriteLine("MongoDB Error: {0}", ex.Message);
+                return BadRequest("Failed to add sanction.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("General Error: {0}", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        public class AddSanctionRequest
+        {
+            public string Sanction { get; set; }
+            public bool IsSanctioned { get; set; }
+        }
     }
 }
 

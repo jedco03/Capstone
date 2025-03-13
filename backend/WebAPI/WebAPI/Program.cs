@@ -35,6 +35,14 @@ builder.Services.AddSingleton<YearService>();
 builder.Services.AddSingleton<CourseService>();
 builder.Services.AddSingleton<ViolationService>();
 builder.Services.AddSingleton<AuditTrailService>();
+builder.Services.AddSingleton<SemesterService>();
+
+// Register BrevoEmailService with the API key and sender details
+builder.Services.AddSingleton<BrevoEmailService>(new BrevoEmailService(
+    apiKey: "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", // Replace with your actual API key
+    senderEmail: "jedco04@gmail.com", // Replace with your verified sender email
+    senderName: "Your School Administration"
+));
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
@@ -78,10 +86,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true, // Set to true if using Audience
             ValidAudience = "localhost", // Match the token's audience
             ValidateLifetime = true,
-            RoleClaimType = ClaimTypes.Role 
+            RoleClaimType = ClaimTypes.Role
         };
     });
-
 
 // Authorization Policy
 builder.Services.AddAuthorization(options =>

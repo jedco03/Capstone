@@ -30,6 +30,9 @@ const FileManagement = () => {
   const [courseToEdit, setCourseToEdit] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [semesters, setSemesters] = useState([]);
+  const [showSemesterModal, setShowSemesterModal] = useState(false);
+  const [semesterToEdit, setSemesterToEdit] = useState(null);
   const [courseData, setCourseData] = useState({
     id: "",
     name: "",
@@ -47,6 +50,7 @@ const FileManagement = () => {
     { id: "course", label: "Course" },
     { id: "violations", label: "Violations" },
     { id: "accounts", label: "Accounts" },
+    { id: "semesters", label: "Semesters" },
   ];
 
   useEffect(() => {
@@ -54,6 +58,7 @@ const FileManagement = () => {
     if (activeTab === "course") fetchCourses();
     if (activeTab === "violations") fetchViolations();
     if (activeTab === "accounts") fetchAccounts();
+    if (activeTab === "semesters") fetchSemesters();
   }, [activeTab]);
 
   const fetchColleges = async () => {
@@ -102,6 +107,19 @@ const FileManagement = () => {
       setAccounts(response.data);
     } catch (err) {
       setError("Failed to fetch accounts.");
+    }
+    setLoading(false);
+  };
+
+  const fetchSemesters = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.get("https://localhost:7096/api/semesters");
+      const sortedSemesters = response.data.sort((a, b) => a.semesterId.localeCompare(b.semesterId));
+      setSemesters(sortedSemesters);
+    } catch (err) {
+      setError("Failed to fetch semesters.");
     }
     setLoading(false);
   };
@@ -188,6 +206,59 @@ const FileManagement = () => {
     setLoading(false);
 };
 
+const handleCreateOrUpdateSemester = async (semesterData) => {
+  setLoading(true);
+  setError("");
+
+  try {
+    // Convert dates to ISO 8601 format
+    const payload = {
+      ...semesterData,
+      startDate: new Date(semesterData.startDate).toISOString(),
+      endDate: new Date(semesterData.endDate).toISOString(),
+      id: semesterToEdit?.id || "", // Include the ID for updates (or empty string for new semesters)
+    };
+
+    console.log("Sending semesterData:", payload); // Log the payload
+
+    if (semesterToEdit) {
+      // Update existing semester
+      const response = await api.put(
+        `/semesters/${semesterToEdit.id}`,
+        payload
+      );
+      setSemesters(
+        semesters.map((semester) =>
+          semester.id === semesterToEdit.id ? response.data : semester
+        )
+      );
+      setSuccessMessage("Semester updated successfully!");
+    } else {
+      // Create new semester
+      const response = await api.post(
+        "/semesters",
+        payload
+      );
+      setSemesters([...semesters, response.data]);
+      setSuccessMessage("Semester added successfully!");
+    }
+
+    setShowSemesterModal(false);
+    setSemesterToEdit(null);
+    setShowSuccessModal(true);
+    fetchSemesters();
+  } catch (err) {
+    console.error("Error:", err);
+    setError(semesterToEdit ? "Failed to update semester." : "Failed to create semester.");
+  }
+  setLoading(false);
+};
+
+const handleEditSemester = (semester) => {
+  setSemesterToEdit(semester);
+  setShowSemesterModal(true);
+};
+
   const generateCustomId = (existingItems, prefix) => {
     if (existingItems.length === 0) {
       return `${prefix}_1`;
@@ -254,57 +325,61 @@ const FileManagement = () => {
   const handleDelete = async (id, type) => {
     setLoading(true);
     setError("");
-
+  
     try {
-        let endpoint = "";
-
-        switch (type) {
-            case "college":
-                endpoint = `/colleges/${id}`;
-                break;
-            case "violation":
-                endpoint = `/violations/${id}`;
-                break;
-            case "course":
-                endpoint = `/courses/${id}`;
-                break;
-            case "account":
-                endpoint = `/auth/delete/${id}`;
-                break;
-            default:
-                throw new Error("Invalid item type");
-        }
-
-        // Send the delete request using api
-        await api.delete(endpoint);
-
-        // Update the state based on the item type
-        switch (type) {
-            case "college":
-                setColleges(colleges.filter((college) => college.id !== id));
-                break;
-            case "violation":
-                setViolations(violations.filter((violation) => violation.id !== id));
-                break;
-            case "course":
-                setCourses(courses.filter((course) => course.id !== id));
-                break;
-            case "account":
-                setAccounts(accounts.filter((account) => account.username !== id));
-                break;
-            default:
-                break;
-        }
-
-        setItemToDelete({ id: null, type: null });
-        setSuccessMessage(`${type} deleted successfully!`);
-        setShowSuccessModal(true);
+      let endpoint = "";
+  
+      switch (type) {
+        case "college":
+          endpoint = `/colleges/${id}`;
+          break;
+        case "violation":
+          endpoint = `/violations/${id}`;
+          break;
+        case "course":
+          endpoint = `/courses/${id}`;
+          break;
+        case "account":
+          endpoint = `/auth/delete/${id}`;
+          break;
+        case "semester": // Add case for semesters
+          endpoint = `/semesters/${id}`;
+          break;
+        default:
+          throw new Error("Invalid item type");
+      }
+  
+      await axios.delete(`https://localhost:7096${endpoint}`);
+  
+      switch (type) {
+        case "college":
+          setColleges(colleges.filter((college) => college.id !== id));
+          break;
+        case "violation":
+          setViolations(violations.filter((violation) => violation.id !== id));
+          break;
+        case "course":
+          setCourses(courses.filter((course) => course.id !== id));
+          break;
+        case "account":
+          setAccounts(accounts.filter((account) => account.username !== id));
+          break;
+        case "semester": // Update state for semesters
+          setSemesters(semesters.filter((semester) => semester.id !== id));
+          break;
+        default:
+          break;
+      }
+  
+      setItemToDelete({ id: null, type: null });
+      setSuccessMessage(`${type} deleted successfully!`);
+      setShowSuccessModal(true);
     } catch (err) {
-        console.error("Error deleting item:", err);
-        setError(`Failed to delete ${type}. ${err.message}`);
+      console.error("Error deleting item:", err);
+      setError(`Failed to delete ${type}. ${err.message}`);
     }
     setLoading(false);
-};
+  };
 
   const toggleDropdown = (id) => {
     setDropdownOpen(dropdownOpen === id ? null : id);
@@ -809,6 +884,189 @@ const handleCreateOrUpdateCourse = async (courseData) => {
           </div>
         </div>
       )}
+
+        {activeTab === "semesters" && (
+          <div className="FM-table-container">
+            <div className="FM-add-account-row">
+              <h2>Semester List</h2>
+              <button className="FM-add-button" onClick={() => setShowSemesterModal(true)}>
+                Add Semester
+              </button>
+            </div>
+
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p className="FM-error">{error}</p>
+            ) : (
+              <div className="FM-table-wrapper">
+                <table className="FM-table">
+                  <thead>
+                    <tr>
+                      <th>Semester ID</th>
+                      <th>Academic Year</th>
+                      <th>Semester Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {semesters.map((semester) => (
+                      <tr key={semester.id}>
+                        <td>{semester.semesterId}</td>
+                        <td>{semester.academicYear}</td>
+                        <td>{semester.semesterName}</td>
+                        <td>{new Date(semester.startDate).toLocaleDateString()}</td>
+                        <td>{new Date(semester.endDate).toLocaleDateString()}</td>
+                        <td>
+                          <button
+                            className="FM-action-button"
+                            onClick={() => setDropdownOpen(dropdownOpen === semester.id ? null : semester.id)}
+                          >
+                            ⋮
+                          </button>
+                          {dropdownOpen === semester.id && (
+                            <div className="FM-dropdown-menu">
+                              <button onClick={() => handleEditSemester(semester)}>Edit</button>
+                              <button onClick={() => setItemToDelete({ id: semester.id, type: "semester" })}>
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {showSemesterModal && (
+          <div className="FM-overlay">
+            <div className="FM-modal-content">
+              {/* Close Button */}
+              <button className="FM-close-button" onClick={() => {
+                setShowSemesterModal(false);
+                setSemesterToEdit(null);
+              }}>×</button>
+
+              {/* Modal Title */}
+              <h3>{semesterToEdit ? "Edit Semester" : "Add Semester"}</h3>
+              <p>{semesterToEdit ? "Fill in the details to edit the semester." : "Fill in the details to add a new semester."}</p>
+
+              {/* Form */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const academicYear = formData.get("academicYear");
+                  const semester = formData.get("semester");
+
+                  // Generate Semester ID
+                  const [startYear, endYear] = academicYear.split("-");
+                  const semesterId = `${startYear.slice(-2)}${endYear.slice(-2)}_SEM_${
+                    semester === "First Semester" ? "1" :
+                    semester === "Second Semester" ? "2" :
+                    semester === "Summer" ? "3" : ""
+                  }`;
+
+                  const semesterData = {
+                    semesterId,
+                    academicYear,
+                    semesterName: semester,
+                    startDate: formData.get("startDate"),
+                    endDate: formData.get("endDate"),
+                  };
+                  handleCreateOrUpdateSemester(semesterData);
+                }}
+              >
+                {/* Academic Year Dropdown */}
+                <div className="FM-form-group">
+                  <label>Academic Year:</label>
+                  <select
+                    name="academicYear"
+                    defaultValue={semesterToEdit?.academicYear || ""}
+                    className="FM-input"
+                    required
+                  >
+                    <option value="">Select Academic Year</option>
+                    {Array.from({ length: 10 }, (_, i) => {
+                      const startYear = new Date().getFullYear() + i;
+                      const endYear = startYear + 1;
+                      return `${startYear}-${endYear}`;
+                    }).map((year) => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Semester Dropdown */}
+                <div className="FM-form-group">
+                  <label>Semester:</label>
+                  <select
+                    name="semester"
+                    defaultValue={semesterToEdit?.semesterName || ""}
+                    className="FM-input"
+                    required
+                  >
+                    <option value="">Select Semester</option>
+                    <option value="First Semester">First Semester</option>
+                    <option value="Second Semester">Second Semester</option>
+                    <option value="Summer">Summer</option>
+                  </select>
+                </div>
+
+                {/* Start Date */}
+                <div className="FM-form-group">
+                  <label>Start Date:</label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    defaultValue={semesterToEdit?.startDate?.split("T")[0] || ""}
+                    className="FM-input"
+                    required
+                  />
+                </div>
+
+                {/* End Date */}
+                <div className="FM-form-group">
+                  <label>End Date:</label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    defaultValue={semesterToEdit?.endDate?.split("T")[0] || ""}
+                    className="FM-input"
+                    required
+                  />
+                </div>
+
+                {/* Buttons */}
+                <div className="FM-button-group">
+                  <button
+                    type="button"
+                    className="FM-cancel-btn"
+                    onClick={() => {
+                      setShowSemesterModal(false);
+                      setSemesterToEdit(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="FM-submit-btn"
+                    disabled={loading}
+                  >
+                    {loading ? "Saving..." : (semesterToEdit ? "Update" : "Create")}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
       {showSuccessModal && (
         <SuccessModal

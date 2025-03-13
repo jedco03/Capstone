@@ -121,14 +121,14 @@ function GuardContent() {
       alert('This report has already been processed.');
       return;
     }
-
+  
     try {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const userFullName = localStorage.getItem('userName');
-
+  
       let studentExists = false;
-
+  
       try {
         await api.get(`/records/${report.studentNumber}`);
         studentExists = true;
@@ -148,13 +148,14 @@ function GuardContent() {
             guardian: report.guardian || '',
             violations: [],
           };
-
+  
           await api.post('/records', newStudent);
         } else {
           throw error;
         }
       }
-
+  
+      // Include Sanction, Proof, and IsSanctioned with default values
       const newViolation = {
         violationId: report.violation || 'Missing violationId',
         remarks: report.remarks || 'No remarks provided',
@@ -162,14 +163,17 @@ function GuardContent() {
         guardName: report.guardName || 'Unknown guard',
         status: report.status,
         isIDInPossession: report.isIDInPossession ?? false,
+        sanction: "Pending Decision", 
+        proof: "", 
+        isSanctioned: false, 
       };
-
+  
       await api.post(`/records/addViolation/${report.studentNumber}`, newViolation, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
       await api.patch(`/reports/${report.id}`, { isPassed: true, isViewed: true });
-
+  
       if (!isBulkOperation) {
         showSuccessMessage(); // Show success message for single approval
         closeModal();

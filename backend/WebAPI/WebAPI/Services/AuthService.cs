@@ -94,6 +94,15 @@ namespace WebAPI.Services
             return result.DeletedCount > 0;
         }
 
+        public async Task<User> GetDeanByCollegeIdAsync(string collegeId)
+        {
+            var filter = Builders<User>.Filter.And(
+                Builders<User>.Filter.Eq(u => u.role, "Dean"),
+                Builders<User>.Filter.Eq(u => u.college, collegeId)
+            );
+
+            return await _usersCollection.Find(filter).FirstOrDefaultAsync();
+        }
 
     }
 }

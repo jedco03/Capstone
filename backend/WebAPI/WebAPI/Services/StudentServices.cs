@@ -18,8 +18,14 @@ namespace WebAPI.Services
         private readonly CollegeService _collegeService;
         private readonly YearService _yearService;
         private readonly ViolationService _violationService;
+        private readonly SemesterService _semesterService;
 
-        public StudentServices(IOptions<DatabaseSettings> settings, CollegeService collegeService, YearService yearService, ViolationService violationService)
+        public StudentServices(
+            IOptions<DatabaseSettings> settings,
+            CollegeService collegeService,
+            YearService yearService,
+            ViolationService violationService,
+            SemesterService semesterService)
         {
             var mongoClient = new MongoClient(settings.Value.Connection);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
@@ -32,10 +38,16 @@ namespace WebAPI.Services
             _collegeService = collegeService;
             _yearService = yearService;
             _violationService = violationService;
+            _semesterService = semesterService; 
         }
 
         public async Task<List<Student>> GetAsync()
         {
+            // Fetch the current semester
+            var currentSemester = await _semesterService.GetActiveSemesterAsync(DateTime.UtcNow);
+            Console.WriteLine("Current Semester: {0}", currentSemester.Id);
+
+            // Fetch all students
             var students = await _studentCollection.Find(_ => true).ToListAsync();
             var colleges = await _collegeService.GetAllCollegesAsync();
             var years = await _yearCollection.Find(_ => true).ToListAsync();
@@ -54,13 +66,18 @@ namespace WebAPI.Services
                 Gender = student.Gender,
                 PhoneNumber = student.PhoneNumber,
                 Guardian = student.Guardian,
-                NumberOfViolations = student.Violations?.Count ?? 0,
+                NumberOfViolations = student.Violations?
+                    .Count(v => v.Semester == currentSemester?.SemesterId && !v.IsDeleted) ?? 0, 
                 Violations = student.Violations
             }).ToList();
         }
 
         public async Task<Student> GetAsync(string studno)
         {
+            // Fetch the current semester
+            var currentSemester = await _semesterService.GetActiveSemesterAsync(DateTime.UtcNow);
+
+            // Fetch the student
             var student = await _studentCollection.Find(x => x.StudentNumber == studno).FirstOrDefaultAsync();
             if (student == null) return null;
 
@@ -72,6 +89,7 @@ namespace WebAPI.Services
             {
                 Id = student.Id,
                 StudentNumber = student.StudentNumber,
+                Email = student.Email,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
                 MiddleName = student.MiddleName,
@@ -81,7 +99,8 @@ namespace WebAPI.Services
                 Gender = student.Gender,
                 PhoneNumber = student.PhoneNumber,
                 Guardian = student.Guardian,
-                NumberOfViolations = student.Violations?.Count ?? 0,
+                NumberOfViolations = student.Violations?
+                    .Count(v => v.Semester == currentSemester?.SemesterId && !v.IsDeleted) ?? 0, // Count only current semester and non-deleted violations
                 Violations = student.Violations
             };
         }
@@ -108,6 +127,18 @@ namespace WebAPI.Services
 
         public async Task AddViolationAsync(string studno, Violation newViolation)
         {
+            // Fetch the active semester based on the violation's date
+            var activeSemester = await _semesterService.GetActiveSemesterAsync(newViolation.Date);
+
+            if (activeSemester == null)
+            {
+                throw new Exception("No active semester found for the given date.");
+            }
+
+            // Assign the semester to the violation
+            newViolation.Semester = activeSemester.SemesterId;
+
+            // Update the student record
             var filter = Builders<Student>.Filter.Eq(x => x.StudentNumber, studno);
             newViolation.RecordId = ObjectId.GenerateNewId().ToString(); // Ensure new unique ID
             var update = Builders<Student>.Update
@@ -206,7 +237,7 @@ namespace WebAPI.Services
         }
 
 
-        public async Task<(bool Success, string Studno)> MarkViolationAsResolvedAsync(string recordId)
+        public async Task<(bool Success, string Studno)> MarkViolationAsResolvedAsync(string recordId, string proof)
         {
             // Find the student whose violations array contains the given RecordId
             var filter = Builders<Student>.Filter.ElemMatch(s => s.Violations, v => v.RecordId == recordId);
@@ -219,8 +250,10 @@ namespace WebAPI.Services
                 return (false, null); // Student not found
             }
 
-            // Update the status of the matched violation to "Resolved"
-            var update = Builders<Student>.Update.Set("Violations.$.Status", "Resolved");
+            // Update the status of the matched violation to "Resolved" and set the proof
+            var update = Builders<Student>.Update
+                .Set("Violations.$.Status", "Resolved")
+                .Set("Violations.$.Proof", proof); // Add the proof field
 
             // Execute the update
             var result = await _studentCollection.UpdateOneAsync(filter, update);
@@ -228,6 +261,8 @@ namespace WebAPI.Services
             // Return true if the update was successful, along with the student number
             return (result.ModifiedCount > 0, student.StudentNumber);
         }
+
+
         public async Task MarkReportsAsPassed(List<string> reportIds)
         {
             var filter = Builders<GuardReports>.Filter.In(r => r.Id, reportIds);
@@ -241,6 +276,22 @@ namespace WebAPI.Services
             {
                 throw new Exception("Failed to update report statuses.");
             }
+        }
+
+        public async Task<bool> AddSanctionAsync(string recordId, string sanction)
+        {
+            var filter = Builders<Student>.Filter.ElemMatch(
+                s => s.Violations,
+                v => v.RecordId == recordId
+            );
+
+            var update = Builders<Student>.Update
+                .Set("Violations.$.Sanction", sanction)
+                .Set("Violations.$.IsSanctioned", true);  // Corrected spelling
+
+            var result = await _studentCollection.UpdateOneAsync(filter, update);
+
+            return result.ModifiedCount > 0;
         }
 
     }

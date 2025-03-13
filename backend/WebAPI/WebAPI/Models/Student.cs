@@ -53,7 +53,7 @@ namespace WebAPI.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string RecordId { get; set; } = ObjectId.GenerateNewId().ToString(); // Unique for each record
+        public string RecordId { get; set; } = ObjectId.GenerateNewId().ToString();
 
         [BsonElement("violationId")]
         public string ViolationId { get; set; } = string.Empty;
@@ -63,14 +63,32 @@ namespace WebAPI.Models
 
         [BsonElement("date")]
         public DateTime Date { get; set; } = DateTime.Now;
+
         [BsonElement("status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         [BsonElement("acknowledged")]
         public bool Acknowledged { get; set; } = false;
+
         [BsonElement("IsIDInPossession")]
         public bool IsIDInPossession { get; set; } = false;
+
         [BsonElement("guardName")]
         public string guardName { get; set; } = string.Empty;
+
+        [BsonElement("semester")]
+        public string Semester { get; set; } = string.Empty;
+
+        [BsonElement("isDeleted")]
+        public bool IsDeleted { get; set; } = false;
+
+        [BsonElement("sanction")]
+        public string Sanction { get; set; } = string.Empty;
+
+        [BsonElement("proof")]
+        public string Proof { get; set; } = string.Empty;
+
+        [BsonElement("isSanctioned")]  // Corrected spelling
+        public bool IsSanctioned { get; set; } = false;
     }
 }

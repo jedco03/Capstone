@@ -23,6 +23,7 @@ const AddRecordForm = () => {
     const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false); // Added for submission state
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,9 +49,9 @@ const AddRecordForm = () => {
         fetchDropdownData();
     }, []);
 
-    // Submit Form
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsSubmitting(true); // Disable the submit button
 
         console.log("Submitting Student Data:", {
             studentNumber,
@@ -60,11 +61,13 @@ const AddRecordForm = () => {
             middleName,
             yearId: selectedYear,
             collegeId: selectedCollege,
-            courseId: selectedCourse, // ✅ Added course ID
+            courseId: selectedCourse,
             gender: selectedGender,
             phoneNumber,
             guardian,
-            violations: []
+            violations: [],
+            isDelete: false, // Default to false for new records
+            semester: null // Will be set in the backend
         });
 
         const newStudent = {
@@ -75,11 +78,13 @@ const AddRecordForm = () => {
             middleName,
             yearId: selectedYear,
             collegeId: selectedCollege,
-            courseId: selectedCourse, // ✅ Send course ID
+            courseId: selectedCourse,
             gender: selectedGender,
             phoneNumber,
             guardian,
-            violations: []
+            violations: [],
+            isDelete: false, // Default to false for new records
+            semester: null // Will be set in the backend
         };
 
         try {
@@ -90,6 +95,8 @@ const AddRecordForm = () => {
             console.error('Error creating record:', error);
             setErrorMessage(error.response?.data?.message || 'An error occurred while adding the record.');
             setIsErrorModalVisible(true);
+        } finally {
+            setIsSubmitting(false); // Re-enable the submit button
         }
     };
 
@@ -242,7 +249,9 @@ const AddRecordForm = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" id='AddrecordButton'>Add Record</button>
+                <button type="submit" id='AddrecordButton' disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting...' : 'Add Record'}
+                </button>
             </form>
 
             {/* Success Modal */}

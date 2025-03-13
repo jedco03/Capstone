@@ -28,6 +28,8 @@ const ReportSummaryCharts = () => {
         const coursesResponse = await api.get('/courses');
         const yearsResponse = await api.get('/years');
 
+        console.log("Fetched Data: ", studentsResponse, collegesResponse, violationsResponse, coursesResponse, yearsResponse);
+
         setStudents(studentsResponse.data);
         setColleges(collegesResponse.data);
         setViolations(violationsResponse.data);
@@ -82,6 +84,7 @@ const ReportSummaryCharts = () => {
             return acc;
           }, {})
         ).map(([name, count]) => ({ name, count }));
+        console.log("College Data: ", processedData);
         break;
 
       case 'year':
@@ -94,6 +97,7 @@ const ReportSummaryCharts = () => {
             return acc;
           }, {})
         ).map(([name, count]) => ({ name, count }));
+        console.log("College Data: ", processedData);
         break;
 
       case 'course':
@@ -106,6 +110,7 @@ const ReportSummaryCharts = () => {
             return acc;
           }, {})
         ).map(([name, count]) => ({ name, count }));
+        console.log("College Data: ", processedData);
         break;
 
       case 'violation':
@@ -120,6 +125,7 @@ const ReportSummaryCharts = () => {
             return acc;
           }, {})
         ).map(([name, count]) => ({ name, count }));
+        console.log("College Data: ", processedData);
         break;
 
       default:
