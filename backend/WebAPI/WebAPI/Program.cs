@@ -39,7 +39,7 @@ builder.Services.AddSingleton<SemesterService>();
 
 // Register BrevoEmailService with the API key and sender details
 builder.Services.AddSingleton<BrevoEmailService>(new BrevoEmailService(
-    apiKey: "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", // Replace with your actual API key
+    apiKey: builder.Configuration["SendinblueApiKey"], // Replace with your actual API key
     senderEmail: "jedco04@gmail.com", // Replace with your verified sender email
     senderName: "Your School Administration"
 ));

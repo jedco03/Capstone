@@ -26,15 +26,18 @@ namespace WebAPI.Controllers
         private readonly ViolationService _violationService;
         private readonly AuthService _authService;
         private readonly IMongoCollection<College> _collegeCollection;
-        public RecordsController(StudentServices studentServices, 
-            IHttpContextAccessor httpContextAccessor, 
-            AuditTrailService auditTrailService, 
-            CollegeService collegeservice, 
-            CourseService courseservice, 
-            YearService yearservice, 
-            ViolationService violationService, 
-            AuthService authService,
-            IOptions<DatabaseSettings> settings)
+        private readonly IConfiguration _configuration;
+        public RecordsController(
+        StudentServices studentServices,
+        IHttpContextAccessor httpContextAccessor,
+        AuditTrailService auditTrailService,
+        CollegeService collegeservice,
+        CourseService courseservice,
+        YearService yearservice,
+        ViolationService violationService,
+        AuthService authService,
+        IOptions<DatabaseSettings> settings,
+        IConfiguration configuration) // Add this
         {
             _studentServices = studentServices;
             _httpContextAccessor = httpContextAccessor;
@@ -44,6 +47,8 @@ namespace WebAPI.Controllers
             _yearService = yearservice;
             _violationService = violationService;
             _authService = authService;
+            _configuration = configuration; // Initialize configuration
+
             var mongoClient = new MongoClient(settings.Value.Connection);
             var mongoDb = mongoClient.GetDatabase(settings.Value.DatabaseName);
             _collegeCollection = mongoDb.GetCollection<College>("collegeColl");
@@ -215,9 +220,12 @@ namespace WebAPI.Controllers
                         throw new Exception($"College ID not found for college name: {student.CollegeId}");
                     }
 
+                    // Use _configuration to access the API key
+                    var apiKey = _configuration["SendinblueApiKey"];
+
                     // Send email notification to the student
                     var emailService = new BrevoEmailService(
-                        apiKey: "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",
+                        apiKey: apiKey, // Use the API key from configuration
                         senderEmail: "jedco04@gmail.com",
                         senderName: "Your School Administration"
                     );
@@ -247,20 +255,20 @@ namespace WebAPI.Controllers
                         // Send email notification to the dean
                         var deanSubject = "New Violation Recorded for Student";
                         var deanBody = $"Dear {dean.Name},<br/><br/>" +
-                                       $"A new violation has been recorded for the following student:<br/><br/>" +
-                                       $"<b>Student Details:</b><br/>" +
-                                       $"Name: {student.FirstName} {student.LastName}<br/>" +
-                                       $"Student Number: {student.StudentNumber}<br/>" +
-                                       $"College: {student.CollegeId}<br/>" + // Use the mapped college name
-                                       $"Course: {student.CourseId}<br/><br/>" +
-                                       $"<b>Violation Details:</b><br/>" +
-                                       $"Violation: {violationDetails.Name}<br/>" +
-                                       $"Type: {violationDetails.Type}<br/>" +
-                                       $"Remarks: {newViolation.Remarks}<br/>" +
-                                       $"Guard Name: {newViolation.guardName}<br/>" +
-                                       $"Status: {newViolation.Status}<br/><br/>" +
-                                       $"Please review the violation and take appropriate action.<br/><br/>" +
-                                       $"Best regards,<br/>Your School Administration";
+                                        $"A new violation has been recorded for the following student:<br/><br/>" +
+                                        $"<b>Student Details:</b><br/>" +
+                                        $"Name: {student.FirstName} {student.LastName}<br/>" +
+                                        $"Student Number: {student.StudentNumber}<br/>" +
+                                        $"College: {student.CollegeId}<br/>" + // Use the mapped college name
+                                        $"Course: {student.CourseId}<br/><br/>" +
+                                        $"<b>Violation Details:</b><br/>" +
+                                        $"Violation: {violationDetails.Name}<br/>" +
+                                        $"Type: {violationDetails.Type}<br/>" +
+                                        $"Remarks: {newViolation.Remarks}<br/>" +
+                                        $"Guard Name: {newViolation.guardName}<br/>" +
+                                        $"Status: {newViolation.Status}<br/><br/>" +
+                                        $"Please review the violation and take appropriate action.<br/><br/>" +
+                                        $"Best regards,<br/>Your School Administration";
 
                         await emailService.SendEmailAsync(dean.Email, dean.Name, deanSubject, deanBody);
                     }
@@ -472,11 +480,12 @@ namespace WebAPI.Controllers
 
                 // Fetch the student details
                 var student = await _studentServices.GetAsync(studno);
+                var apiKey = _configuration["SendinblueApiKey"];
                 if (student != null && !string.IsNullOrEmpty(student.Email))
                 {
                     // Send email notification to the student
                     var emailService = new BrevoEmailService(
-                        apiKey: "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",
+                        apiKey: apiKey,
                         senderEmail: "jedco04@gmail.com",
                         senderName: "Your School Administration"
                     );
